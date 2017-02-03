@@ -20,4 +20,4 @@ Simple cross-platform NuGet-Server that can serve multiple feeds and allows for 
 
 ## Contributing
 
-Larais-NuGet-Server is developed and maintained by [Sebastian Lang](https://github.com/SebastianLang) and [David Morais Ferreira](https://github.com/DavidMoraisFerreira). We are always happy for contributions, so feel free to create Issues or open Pull Requests!
+Larais-NuGet-Server is developed and maintained by [Sebastian Lang](https://github.com/SebastianLng) and [David Morais Ferreira](https://github.com/DavidMoraisFerreira). We are always happy for contributions, so feel free to create Issues or open Pull Requests!
