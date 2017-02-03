@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es5",
+    "outDir": "../wwwroot/js"
+  },
+  "include": [
+    "typings/index.d.ts",
+    "./model.ts",
+    "./home.ts",
+    "./admin.ts"
+  ],
+  "exclude": [
+    "wwwroot"
+  ],
+  "compileOnSave": true
+}

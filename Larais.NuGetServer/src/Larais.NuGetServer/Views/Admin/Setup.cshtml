@@ -1,0 +1,50 @@
+﻿@model Larais.NuGetServer.Model.AdminSetupViewModel
+
+@{
+    ViewData["Title"] = "Administrator setup";
+}
+
+@section styles {
+    <link href="~/css/admin.css" rel="stylesheet" />
+}
+
+<h2>Administrator setup</h2>
+
+<div class="admin-form">
+    <form asp-controller="Admin" asp-action="Setup" method="post" class="form-horizontal" role="form">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Email" class="col-md-4 control-label"></label>
+            <div class="col-md-8">
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password" class="col-md-4 control-label"></label>
+            <div class="col-md-8">
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="PasswordConfirm" class="col-md-4 control-label"></label>
+            <div class="col-md-8">
+                <input asp-for="PasswordConfirm" class="form-control" />
+                <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="PackagePath" class="col-md-4 control-label"></label>
+            <div class="col-md-8">
+                <input asp-for="PackagePath" class="form-control" />
+                <span asp-validation-for="PackagePath" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-default">Complete setup</button>
+            </div>
+        </div>
+    </form>
+</div>

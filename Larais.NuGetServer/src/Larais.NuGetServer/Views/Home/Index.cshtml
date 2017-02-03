@@ -1,0 +1,84 @@
+﻿@model Larais.NuGetServer.Model.UploadViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+<script src="~/js/home.js"></script>
+
+
+@section GettingStarted {
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Hello, there!</h1>
+            <p>Follow these simple steps to get up and running in no time.</p>
+            @if ((bool)ViewData["FirstRun"])
+            {
+                <div class="row">
+                    <p class="alert alert-danger text-center">
+                        <strong>
+                            Looks like you haven't changed your settings.json file!
+                        </strong>
+                        Head to the <a asp-controller="Admin" asp-action="Setup">Admin Panel</a> to get started.
+                    </p>
+                </div>
+            }
+
+
+            <div class="row voffset60" id="GettingStarted">
+                <div class="col-xs-4 text-center">
+                    <span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
+                    <span class="visible-xs">Upload packages</span>
+                    <p class="hidden-xs">Upload your packages</p>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                    <span class="visible-xs">Add feed url</span>
+                    <p class="hidden-xs">Add the feed url to your package manager</p>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
+                    <span class="visible-xs">Contribute to <a href="https://github.com/SebastianLng/larais-nuget-server" target="_blank" alt="Contribute to Larais GitHub repository">Larais</a></span>
+                    <p class="hidden-xs">Contribute to <a href="https://github.com/SebastianLng/larais-nuget-server" target="_blank" alt="Contribute to Larais GitHub repository">Larais</a></p>
+                </div>
+            </div>
+
+            <div class="row text-center">
+                <div class="col-md-4 col-sm-4 col-md-offset-8 col-sm-offset-8">
+                    @*<a class="btn btn-default" id="HideGettingStarted" href="#" role="button">Got it! Don't show me again.</a>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+<div class="row well">
+    <div class="col-md-10 col-sm-9">
+        <input type="text" class="form-control" id="FeedUrl" readonly value="https://larais.github.com/api/v2/">
+    </div>
+    <div class="col-md-2 col-sm-3">
+        <a class="btn btn-default btn-block" href="#" id="CopyFeedUrlClipboard" role="button">Copy to clipboard</a>
+    </div>
+</div>
+
+<div class="row well">
+    <form class="form-upload" asp-controller="Home" asp-action="PackageUpload" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-md-10 col-sm-9">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <span class="btn-file">
+                        <label asp-for="File"></label>&hellip;
+                        <input asp-for="File" type="file" class="form-control" placeholder="File" required accept=".nupkg" />
+                    </span>
+                </span>
+                <input id="input-filename" type="text" class="form-control" readonly value="">
+            </div>
+            <span class="help-block">
+                <span asp-validation-for="File" class="text-danger"></span>
+            </span>
+        </div>
+        <div class="col-md-2 col-sm-3">
+            <button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-floppy-disk"></span> Upload</button>
+        </div>
+    </form>
+</div>

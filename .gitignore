@@ -219,3 +219,5 @@ ModelManifest.xml
 /LaraisNuGetServer/src/Larais.NuGetServer/settings.json
 /LaraisNuGetServer/src/Larais.NuGetServer/wwwroot/css/
 /LaraisNuGetServer/src/Larais.NuGetServer/wwwroot/lib/
+Larais.NuGetServer/src/Larais.NuGetServer/wwwroot/js/
+Larais.NuGetServer/src/Larais.NuGetServer/wwwroot/lib/

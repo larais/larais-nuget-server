@@ -1,0 +1,63 @@
+﻿@import (reference) "../wwwroot/lib/bootstrap/less/bootstrap.less";
+
+body {
+    padding-top: 50px;
+}
+
+footer {
+    background-color: #222;
+    color: #9d9d9d;
+    margin-top: 100px;
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Upload form */
+.form-upload {
+    .btn-file {
+        .btn;
+        .btn-primary;
+        position: relative;
+        overflow: hidden;
+        border-radius: 4px 0px 0px 4px;
+
+        label {
+            margin: 0px;
+        }
+
+        input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            background: red;
+            cursor: inherit;
+            display: block;
+        }
+    }
+
+    input[readonly] {
+        cursor: text !important;
+        background-color: white !important;
+    }
+}
+
+#GettingStarted {
+    .glyphicon {
+        font-size:5em;
+    }
+}
+
+.voffset60 { margin-top:60px; }

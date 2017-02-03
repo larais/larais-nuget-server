@@ -1,0 +1,93 @@
+﻿@model Larais.NuGetServer.Model.AdminViewModel
+
+@using Larais.NuGetServer.Model;
+
+@{
+    ViewData["Title"] = "Administrator Interface";
+}
+
+<link href="~/css/admin.css" rel="stylesheet" />
+<script src="~/js/admin.js"></script>
+
+<h2>Administrator Interface</h2>
+
+<div id="adminTabsContainer">
+    <ul role="tablist">
+        <li role="presentation" class="active"><a href="#Options" aria-controls="options" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-cog"></span> Options</a></li>
+        <li role="presentation"><a href="#Account" aria-controls="account" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-user"></span> Account</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <!-- Options content -->
+        <div role="tabpanel" class="tab-pane fade in active" id="Options">
+            <div class="settingsBlock">
+                <div>
+                    <label asp-for="PackagePath">Package Storage</label>
+                </div>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <input asp-for="PackagePath" class="form-control big-input" placeholder="Path to store packages" />
+                    </div>
+                    <button class="btn btn-default" onclick="changePackagePath();"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+                </div>
+            </div>
+            <div class="settingsBlock">
+                <div>
+                    <label for="btnChangeUploadMode">Package upload mode</label>
+                </div>
+                <div id="uploadModeDropdown" class="btn-group">
+                    <button id="btnChangeUploadMode" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span id="selectedUploadType">@Model.UploadMode.ToDisplayString()</span> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        @foreach (UploadMode uploadMode in Enum.GetValues(typeof(UploadMode)))
+                        {
+                            <li><a class="dropdown-item" modeid="@((int)uploadMode)">@uploadMode.ToDisplayString()</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Account options -->
+        <div role="tabpanel" class="tab-pane fade" id="Account">
+            <div class="settingsBlock">
+                <label asp-for="AdminEmail">Administrator Mail</label>
+                <div class="form-inline">
+                    <div class="form-group">                        
+                        <input asp-for="AdminEmail" class="form-control big-input" placeholder="Administrator email" />
+                    </div>
+                    <button class="btn btn-default" onclick="changeAdminMail();"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+                </div>
+            </div>
+            <div class="settingsBlock">
+                <button class="btn btn-default" type="submit" data-toggle="modal" data-target=".password-modal">Change password</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Password change modal dialog -->
+<div class="modal fade password-modal" tabindex="-1" role="dialog" aria-labelledby="changePasswordDialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">Change admin password</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input id="password" class="form-control" placeholder="Administrator password" />
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordRepeat">Repeate the password</label>
+                        <input id="passwordRepeat" class="form-control" placeholder="Repeat password" />
+                    </div>
+                    <button class="btn btn-default" onclick="changePassword();" data-toggle="modal" data-target=".password-modal"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+﻿@import (reference) "../wwwroot/lib/bootstrap/less/bootstrap.less";
+
+#adminTabsContainer {
+    > ul {
+        .nav;
+        .nav-tabs;
+    }
+
+    .tab-content {
+        > div {
+            padding: 10px 0;
+        }
+    }
+}
+
+.settingsBlock {
+    padding: 10px 0;
+}
+
+@media (min-width: @screen-md) { 
+    .big-input {
+        width: 250px !important;
+    }
+} 
+
+.admin-form {
+    max-width: 500px;
+}
+
+.dropdown-item {
+    cursor: pointer;
+}
