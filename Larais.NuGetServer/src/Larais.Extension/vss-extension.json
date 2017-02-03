@@ -1,0 +1,41 @@
+﻿{
+  "manifestVersion": 1,
+  "id": "larais_extension",
+  "version": "0.0.1",
+  "name": "Larais.Extension",
+  "description": "Manage your own NuGet Feeds",
+  "publisher": "Larais",
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "contributions": [
+    {
+      "id": "Fabrikam.HelloWorld",
+      "type": "ms.vss-web.hub",
+      "description": "Adds a 'Hello' hub to the Work hub group.",
+      "targets": [
+        "ms.vss-work-web.work-hub-group"
+      ],
+      "properties": {
+        "name": "Hello",
+        "order": 99,
+        "uri": "hello-world.html"
+      }
+    }
+  ],
+  "scopes": [
+    "vso.work"
+  ],
+  "files": [
+    {
+      "path": "hello-world.html",
+      "addressable": true
+    },
+    {
+      "path": "scripts",
+      "addressable": true
+    }
+  ]
+}

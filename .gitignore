@@ -214,3 +214,5 @@ ModelManifest.xml
 /Larais.NuGetServer/src/Larais.NuGetApp/wwwroot/css/
 /Larais.NuGetServer/src/Larais.NuGetApp/wwwroot/lib/
 /Larais.NuGetServer/src/Larais.NuGetApp/wwwroot/js/
+/Larais.NuGetServer/src/Larais.Extension/scripts/*js.map
+/Larais.NuGetServer/src/Larais.Extension/scripts/VSS.SDK.min.js
