@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26127.3
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{693C87D0-190D-43D6-8E8C-B7C9BD87E4F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Larais.NuGetServer", "src\Larais.NuGetServer\Larais.NuGetServer.csproj", "{A386899F-2A08-45AB-BEA5-5267C6FB7929}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Larais.NuGet.Server", "src\Larais.NuGet.Server\Larais.NuGet.Server.csproj", "{C8047927-1A0B-49FD-8C78-342FFDDD8D4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,11 +31,24 @@ Global
 		{A386899F-2A08-45AB-BEA5-5267C6FB7929}.Release|x64.Build.0 = Release|x64
 		{A386899F-2A08-45AB-BEA5-5267C6FB7929}.Release|x86.ActiveCfg = Release|x86
 		{A386899F-2A08-45AB-BEA5-5267C6FB7929}.Release|x86.Build.0 = Release|x86
+		{C8047927-1A0B-49FD-8C78-342FFDDD8D4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8047927-1A0B-49FD-8C78-342FFDDD8D4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8047927-1A0B-49FD-8C78-342FFDDD8D4F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C8047927-1A0B-49FD-8C78-342FFDDD8D4F}.Debug|x64.Build.0 = Debug|Any CPU
+		{C8047927-1A0B-49FD-8C78-342FFDDD8D4F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C8047927-1A0B-49FD-8C78-342FFDDD8D4F}.Debug|x86.Build.0 = Debug|Any CPU
+		{C8047927-1A0B-49FD-8C78-342FFDDD8D4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8047927-1A0B-49FD-8C78-342FFDDD8D4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8047927-1A0B-49FD-8C78-342FFDDD8D4F}.Release|x64.ActiveCfg = Release|Any CPU
+		{C8047927-1A0B-49FD-8C78-342FFDDD8D4F}.Release|x64.Build.0 = Release|Any CPU
+		{C8047927-1A0B-49FD-8C78-342FFDDD8D4F}.Release|x86.ActiveCfg = Release|Any CPU
+		{C8047927-1A0B-49FD-8C78-342FFDDD8D4F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A386899F-2A08-45AB-BEA5-5267C6FB7929} = {693C87D0-190D-43D6-8E8C-B7C9BD87E4F9}
+		{C8047927-1A0B-49FD-8C78-342FFDDD8D4F} = {693C87D0-190D-43D6-8E8C-B7C9BD87E4F9}
 	EndGlobalSection
 EndGlobal
