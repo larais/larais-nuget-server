@@ -30,12 +30,19 @@
   ],
   "files": [
     {
-      "path": "hello-world.html",
-      "addressable": true
+      "path": "node_modules/vss-web-extension-sdk/lib",
+      "addressable": true,
+      "packagePath": "lib"
     },
     {
-      "path": "scripts",
-      "addressable": true
+      "path": "dist",
+      "addressable": true,
+      "packagePath": "/"
+    },
+    {
+      "path": "static",
+      "addressable": true,
+      "packagePath": "/"
     }
   ]
 }

@@ -1,9 +1,14 @@
 ﻿{
-    "compilerOptions": {
-        "module": "commonjs",
-        "sourceMap": false
-    },
-    "exclude": [
-        "node_modules"
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES5",
+    "sourceMap": false,
+    "moduleResolution": "node",
+    "types": [
+      "vss-web-extension-sdk"
     ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }
