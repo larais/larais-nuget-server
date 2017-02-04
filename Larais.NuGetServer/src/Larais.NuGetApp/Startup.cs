@@ -10,11 +10,14 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Larais.NuGetApp;
 
 namespace Larais.NuGetServer
 {
     public class Startup
     {
+        private NuGetServerProxy nugetServerProxy;
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -30,6 +33,8 @@ namespace Larais.NuGetServer
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            nugetServerProxy = new NuGetServerProxy(new Dictionary<string, string>());
         }
 
         public IConfigurationRoot Configuration { get; set; }
@@ -65,6 +70,20 @@ namespace Larais.NuGetServer
             {
                 app.UseExceptionHandler("/error");
             }
+
+            app.Use(async (context, next) =>
+            {
+                PathString feedName;
+                PathString remainingPath;
+                if (context.Request.Path.StartsWithSegments("/feed", out feedName, out remainingPath))
+                {
+                    await nugetServerProxy.Forward(context, remainingPath);
+                }
+                else
+                {
+                    await next();
+                }
+            });
 
             app.UseStaticFiles();
             
