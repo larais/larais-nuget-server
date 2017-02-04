@@ -12,7 +12,7 @@
   ],
   "contributions": [
     {
-      "id": "Fabrikam.HelloWorld",
+      "id": "Larais.Extension",
       "type": "ms.vss-web.hub",
       "description": "Adds a 'Hello' hub to the Work hub group.",
       "targets": [
@@ -30,11 +30,6 @@
   ],
   "files": [
     {
-      "path": "node_modules/vss-web-extension-sdk/lib",
-      "addressable": true,
-      "packagePath": "lib"
-    },
-    {
       "path": "dist",
       "addressable": true,
       "packagePath": "/"
@@ -43,6 +38,11 @@
       "path": "static",
       "addressable": true,
       "packagePath": "/"
+    },
+    {
+      "path": "node_modules/vss-web-extension-sdk/lib",
+      "addressable": true,
+      "packagePath": "lib"
     }
   ]
 }

@@ -1,14 +1,16 @@
 ﻿{
   "compilerOptions": {
     "module": "commonjs",
-    "target": "ES5",
     "sourceMap": false,
+    "target": "ES5",
     "moduleResolution": "node",
+    "rootDir": "src/",
+    "outDir": "dist/",
     "types": [
       "vss-web-extension-sdk"
     ]
   },
-  "exclude": [
-    "node_modules"
-  ]
+    "exclude": [
+        "node_modules"
+    ]
 }
