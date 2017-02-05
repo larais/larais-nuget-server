@@ -16,6 +16,8 @@ namespace Larais.NuGetApp
 {
     public class Startup
     {
+        public static IServiceProvider ServiceProvider { get; private set; }
+
         private NuGetServerProxy nugetServerProxy;
 
         public Startup(IHostingEnvironment env)
@@ -24,17 +26,9 @@ namespace Larais.NuGetApp
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
-
-            if (env.IsDevelopment())
-            {
-                // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-                //builder.AddUserSecrets();
-            }
-
+            
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
-
-            nugetServerProxy = new NuGetServerProxy(new Dictionary<string, string>());
         }
 
         public IConfigurationRoot Configuration { get; set; }
@@ -54,6 +48,9 @@ namespace Larais.NuGetApp
             services.AddSingleton(typeof(SettingsManager));
             //services.AddSingleton<IPackageService, PackageService>();
 
+            ServiceProvider = services.BuildServiceProvider();
+
+            nugetServerProxy = new NuGetServerProxy();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -11,12 +11,15 @@ namespace Larais.NuGetApp
     {
         private readonly HttpClient httpClient;
 
-        private IDictionary<string, string> feedHostMapping;
+        private IReadOnlyDictionary<string, string> feedHostMapping;
 
-        public NuGetServerProxy(IDictionary<string, string> feedHostMapping)
+        public NuGetServerProxy()
         {
             httpClient = new HttpClient();
-            this.feedHostMapping = feedHostMapping;
+
+            var settings = (SettingsManager)Startup.ServiceProvider.GetService(typeof(SettingsManager));
+
+            feedHostMapping = settings.Feeds;
         }
 
         public async Task Forward(HttpContext context, PathString feedPath)
@@ -32,7 +35,7 @@ namespace Larais.NuGetApp
             else if (firstSlash != -1)
             {
                 action = feedName.Substring(firstSlash);
-                feedName = feedName.Substring(0, firstSlash - 1);
+                feedName = feedName.Substring(0, firstSlash);
             }
 
             if (!feedHostMapping.ContainsKey(feedName))
@@ -42,21 +45,23 @@ namespace Larais.NuGetApp
             }
 
             string targetHost = feedHostMapping[feedName];
-            string targetUri = "https://" + targetHost;
+            string targetUri = "http://" + targetHost;
 
-            if (action == null)
+            if (action != null)
             {
-                targetUri += "/nuget";
-            }
-            else
-            {
-                targetUri += action;
+                if (!action.StartsWith("/api"))
+                {
+                    targetUri += "/nuget" + action;
+                }
+                else
+                {
+                    targetUri += action;
+                }
             }
 
-            targetUri += context.Request.QueryString; // TODO works like this?
+            targetUri += context.Request.QueryString;
 
             var proxyRequest = new HttpRequestMessage();
-            proxyRequest.RequestUri = new Uri(targetUri);
 
             var request = context.Request.Method;
             if (!HttpMethods.IsGet(request) &&
@@ -70,12 +75,15 @@ namespace Larais.NuGetApp
 
             foreach (var header in context.Request.Headers)
             {
+                if (header.Key == "Host") continue;
+
                 if (!proxyRequest.Headers.TryAddWithoutValidation(header.Key, header.Value.ToArray()) && proxyRequest.Content != null)
                 {
                     proxyRequest.Content?.Headers.TryAddWithoutValidation(header.Key, header.Value.ToArray());
                 }
             }
 
+            proxyRequest.RequestUri = new Uri(targetUri);
             proxyRequest.Method = new HttpMethod(request);
 
             var response = await httpClient.SendAsync(proxyRequest, HttpCompletionOption.ResponseHeadersRead, context.RequestAborted);

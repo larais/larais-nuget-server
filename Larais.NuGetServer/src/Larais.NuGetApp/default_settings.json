@@ -2,5 +2,6 @@
   "Path": "../Packages",
   "Password": "",
   "UploadMode": 0,
-  "MaxPackageSizeInMB": 25
+  "MaxPackageSizeInMB": 25,
+  "Feeds": {}
 }
