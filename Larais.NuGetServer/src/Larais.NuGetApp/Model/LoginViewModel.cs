@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Larais.NuGetServer.Model
+namespace Larais.NuGetApp.Model
 {
     public class LoginViewModel
     {

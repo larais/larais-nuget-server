@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Larais.NuGetServer.Model;
+using Larais.NuGetApp.Model;
 
-namespace Larais.NuGetServer.Controllers
+namespace Larais.NuGetApp.Controllers
 {
     public class HomeController : Controller
     {

@@ -1,19 +1,22 @@
-﻿using Larais.NuGetServer.Model;
+﻿using Larais.NuGetApp.Model;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
-using System.Security;
 
-namespace Larais.NuGetServer
+namespace Larais.NuGetApp
 {
     public class SettingsManager
     {
-        private Settings config;
+        private Settings settings;
+
         private readonly object settingsLock = new object();
         private readonly IHostingEnvironment applicationEnvironment;
-        private readonly string settingsFileName = "settings.json";
-        private readonly string defaultSettingsFileName = "default_settings.json";
+
+        private const string settingsFileName = "settings.json";
+        private const string defaultSettingsFileName = "default_settings.json";
 
         public SettingsManager(IHostingEnvironment applicationEnvironment)
         {
@@ -21,18 +24,10 @@ namespace Larais.NuGetServer
 
             if (!File.Exists(Path.Combine(applicationEnvironment.ContentRootPath, settingsFileName)))
             {
-                config = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(Path.Combine(applicationEnvironment.ContentRootPath, defaultSettingsFileName)));
+                settings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(Path.Combine(applicationEnvironment.ContentRootPath, defaultSettingsFileName)));
                 FlushToDisk();
             }
-            this.config = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(Path.Combine(applicationEnvironment.ContentRootPath, settingsFileName)));
-        }
-
-        public void FlushToDisk()
-        {
-            lock (settingsLock)
-            {
-                File.WriteAllText(Path.Combine(applicationEnvironment.ContentRootPath, settingsFileName), JsonConvert.SerializeObject(config));
-            }
+            settings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText(Path.Combine(applicationEnvironment.ContentRootPath, settingsFileName)));
         }
 
         public bool AdminIsConfigured()
@@ -47,13 +42,13 @@ namespace Larais.NuGetServer
         {
             get
             {
-                return config.Path;
+                return settings.Path;
             }
             set
             {
                 lock (settingsLock)
                 {
-                    config.Path = value;
+                    settings.Path = value;
                     FlushToDisk();
                 }
             }
@@ -63,13 +58,13 @@ namespace Larais.NuGetServer
         {
             get
             {
-                return config.Email;
+                return settings.Email;
             }
             set
             {
                 lock (settingsLock)
                 {
-                    config.Email = value;
+                    settings.Email = value;
                     FlushToDisk();
                 }
             }
@@ -79,13 +74,13 @@ namespace Larais.NuGetServer
         {
             get
             {
-                return config.Password;
+                return settings.Password;
             }
             set
             {
                 lock (settingsLock)
                 {
-                    config.Password = value;
+                    settings.Password = value;
                     FlushToDisk();
                 }
             }
@@ -95,13 +90,13 @@ namespace Larais.NuGetServer
         {
             get
             {
-                return config.UploadMode;
+                return settings.UploadMode;
             }
             set
             {
                 lock (settingsLock)
                 {
-                    config.UploadMode = value;
+                    settings.UploadMode = value;
                     FlushToDisk();
                 }
             }
@@ -111,15 +106,57 @@ namespace Larais.NuGetServer
         {
             get
             {
-                return config.MaxPackageSizeInMB;
+                return settings.MaxPackageSizeInMB;
             }
             set
             {
                 lock (settingsLock)
                 {
-                    config.MaxPackageSizeInMB = value;
+                    settings.MaxPackageSizeInMB = value;
                     FlushToDisk();
                 }
+            }
+        }
+
+        public IReadOnlyDictionary<string, string> Feeds
+        {
+            get
+            {
+                lock (settingsLock)
+                {
+                    return new ReadOnlyDictionary<string, string>(settings.Feeds);
+                }
+            }
+        }
+
+        public void AddFeed(string name, string location)
+        {
+            lock (settingsLock)
+            {
+                if (settings.Feeds.ContainsKey(name))
+                {
+                    throw new InvalidOperationException("A feed with this name already exists.");
+                }
+
+                settings.Feeds.Add(name, location);
+                FlushToDisk();
+            }
+        }
+
+        public void RemoveFeed(string name)
+        {
+            lock (settingsLock)
+            {
+                settings.Feeds.Remove(name);
+                FlushToDisk();
+            }
+        }
+
+        private void FlushToDisk()
+        {
+            lock (settingsLock)
+            {
+                File.WriteAllText(Path.Combine(applicationEnvironment.ContentRootPath, settingsFileName), JsonConvert.SerializeObject(settings));
             }
         }
     }

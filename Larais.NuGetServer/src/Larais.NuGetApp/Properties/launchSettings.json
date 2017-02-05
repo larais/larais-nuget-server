@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Larais.NuGetServer": {
+    "Larais.NuGetApp": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

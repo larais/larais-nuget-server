@@ -12,7 +12,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Larais.NuGetApp;
 
-namespace Larais.NuGetServer
+namespace Larais.NuGetApp
 {
     public class Startup
     {

@@ -1,4 +1,6 @@
-﻿namespace Larais.NuGetServer.Model
+﻿using System.Collections.Generic;
+
+namespace Larais.NuGetApp.Model
 {
     public class Settings
     {
@@ -11,5 +13,7 @@
         public UploadMode UploadMode { get; set; }
 
         public float MaxPackageSizeInMB { get; set; }
+
+        public IDictionary<string, string> Feeds { get; set; }
     }
 }

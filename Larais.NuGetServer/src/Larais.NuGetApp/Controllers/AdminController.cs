@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Larais.NuGetServer.Model;
+using Larais.NuGetApp.Model;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.IO;
 
-namespace Larais.NuGetServer.Controllers
+namespace Larais.NuGetApp.Controllers
 {
     [Authorize]
     public class AdminController : Controller
