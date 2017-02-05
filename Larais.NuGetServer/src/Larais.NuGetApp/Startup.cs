@@ -75,7 +75,7 @@ namespace Larais.NuGetServer
             {
                 PathString feedName;
                 PathString remainingPath;
-                if (context.Request.Path.StartsWithSegments("/feed", out feedName, out remainingPath))
+                if (context.Request.Path.StartsWithSegments("/feed", out feedName, out remainingPath) && remainingPath.HasValue && remainingPath.Value.Length != 1)
                 {
                     await nugetServerProxy.Forward(context, remainingPath);
                 }
