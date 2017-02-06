@@ -4,7 +4,8 @@ VSS.init({
     usePlatformScripts: true,
     usePlatformStyles: true
 });
-
+VSS.notifyLoadSucceeded();
 VSS.ready(function () {
     console.log("Hello World!");
+    
 });

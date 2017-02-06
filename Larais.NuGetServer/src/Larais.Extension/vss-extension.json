@@ -1,10 +1,19 @@
 ﻿{
   "manifestVersion": 1,
-  "id": "larais_extension",
+  "id": "LaRais-Extension",
   "version": "0.0.1",
   "name": "Larais.Extension",
-  "description": "Manage your own NuGet Feeds",
-  "publisher": "Larais",
+  "description": "Simple NuGet-Server that can serve multiple feeds and allows for web based uploading and managing of NuGet packages.",
+  "publisher": "larais",
+  "public": false,
+  "categories": [
+    "Build and release"
+  ],
+  "tags": [
+    "nuget",
+    "package",
+    "management"
+  ],
   "targets": [
     {
       "id": "Microsoft.VisualStudio.Services"
@@ -14,14 +23,14 @@
     {
       "id": "Larais.Extension",
       "type": "ms.vss-web.hub",
-      "description": "Adds a 'Hello' hub to the Work hub group.",
+      "description": "",
       "targets": [
         "ms.vss-work-web.work-hub-group"
       ],
       "properties": {
-        "name": "Hello",
+        "name": "Packages",
         "order": 99,
-        "uri": "hello-world.html"
+        "uri": "index.html"
       }
     }
   ],
@@ -32,17 +41,39 @@
     {
       "path": "dist",
       "addressable": true,
-      "packagePath": "/"
+      "packagePath": "dist"
     },
     {
       "path": "static",
       "addressable": true,
-      "packagePath": "/"
+      "packagePath": "static"
+    },
+    {
+      "path": "index.html",
+      "addressable": true
     },
     {
       "path": "node_modules/vss-web-extension-sdk/lib",
       "addressable": true,
-      "packagePath": "lib"
+      "packagePath": "dist/lib"
     }
-  ]
+  ],
+  "links": {
+    "home": {
+      "uri": "https://github.com/SebastianLng/larais-nuget-server"
+    },
+    "getstarted": {
+      "uri": "https://github.com/SebastianLng/larais-nuget-server/blob/develop/README.md"
+    },
+    "issues": {
+      "uri": "https://github.com/SebastianLng/larais-nuget-server/issues"
+    },
+    "license": {
+      "uri": "https://github.com/SebastianLng/larais-nuget-server/blob/develop/LICENSE"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/SebastianLng/larais-nuget-server"
+  }
 }

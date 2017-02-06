@@ -2,7 +2,7 @@
     grunt.initConfig({
         ts: {
             build: {
-                tsconfig: true,
+                tsconfig: true
             },
             options: {
                 fast: 'never'
@@ -10,10 +10,15 @@
         },
         exec: {
             package_dev: {
-                command: "tfx extension create --manifests vss-extension.json",
+                command: "tfx extension create --rev-version --manifests vss-extension.json",
                 stdout: true,
                 stderr: true
             },
+            //package_release: {
+            //    command: "tfx extension create --rev-version --manifests vss-extension.json",
+            //    stdout: true,
+            //    stderr:true
+            //},
             publish_dev: {
                 command: "tfx extension publish --service-url https://marketplace.visualstudio.com --manifests vss-extension.json",
                 stdout: true,
