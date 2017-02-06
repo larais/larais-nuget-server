@@ -217,4 +217,6 @@ ModelManifest.xml
 /Larais.NuGetServer/src/Larais.Extension/*.vsix
 /Larais.NuGetServer/src/Larais.Extension/src/.baseDir.js
 /Larais.NuGetServer/src/Larais.Extension/src/.baseDir.ts
+/Larais.NuGetServer/src/Larais.Extension/src/*.js.map
+/Larais.NuGetServer/src/Larais.Extension/src/*.js
 /Larais.NuGetServer/src/Larais.Extension/dist/
