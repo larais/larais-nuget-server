@@ -22,9 +22,9 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="static\app.css" />
+    <Content Include="static\larais.css" />
     <Content Include="Gruntfile.js" />
-    <Content Include="static\hello-world.html" />
+    <Content Include="index.html" />
     <None Include="tsconfig.json" />
     <Content Include="web.config" />
   </ItemGroup>
