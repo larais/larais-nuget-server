@@ -63,7 +63,7 @@
 <div class="row well">
     <form class="form-upload" asp-controller="Home" asp-action="PackageUpload" method="post" enctype="multipart/form-data">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="col-md-10 col-sm-9">
+        <div class="col-md-6 col-sm-5">
             <div class="input-group">
                 <span class="input-group-btn">
                     <span class="btn-file">
@@ -76,6 +76,21 @@
             <span class="help-block">
                 <span asp-validation-for="File" class="text-danger"></span>
             </span>
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <div id="targetFeedGroup" class="input-group">
+                <span class="input-group-addon" id="sizing-addon1">Target feed</span>
+                <input asp-for="TargetFeed" type="text" class="form-control" readonly value="@((ViewData["FeedNames"] as IEnumerable<string>).First())"/>
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                    <ul id="feedname-dropdown" class="dropdown-menu">
+                        @foreach (var name in ViewData["FeedNames"] as IEnumerable<string>)
+                        {
+                            <li><a href="#">@name</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="col-md-2 col-sm-3">
             <button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-floppy-disk"></span> Upload</button>

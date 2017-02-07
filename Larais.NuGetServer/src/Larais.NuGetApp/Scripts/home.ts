@@ -39,4 +39,9 @@ $(document).ready(function () {
             clipboardButton.toggleClass("btn-success");
         }, 1000);
     });
+
+    $("#feedname-dropdown > li").click(function (e) {
+        var clickedVal = $(e.currentTarget).text();
+        $("#targetFeedGroup > input").val(clickedVal);
+    });
 });

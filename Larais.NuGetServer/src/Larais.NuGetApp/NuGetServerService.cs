@@ -1,25 +1,30 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Larais.NuGetApp
 {
-    public class NuGetServerProxy
+    public class NuGetServerService
     {
         private readonly HttpClient httpClient;
 
-        private IReadOnlyDictionary<string, string> feedHostMapping;
+        private IReadOnlyDictionary<string, string> feeds;
 
-        public NuGetServerProxy()
+        public NuGetServerService()
         {
             httpClient = new HttpClient();
+            RefreshFeeds();
+        }
 
+        public void RefreshFeeds()
+        {
             var settings = (SettingsManager)Startup.ServiceProvider.GetService(typeof(SettingsManager));
 
-            feedHostMapping = settings.Feeds;
+            feeds = settings.Feeds;
         }
 
         public async Task Forward(HttpContext context, PathString feedPath)
@@ -38,13 +43,13 @@ namespace Larais.NuGetApp
                 feedName = feedName.Substring(0, firstSlash);
             }
 
-            if (!feedHostMapping.ContainsKey(feedName))
+            if (!feeds.ContainsKey(feedName))
             {
                 context.Response.StatusCode = 404;
                 return;
             }
 
-            string targetHost = feedHostMapping[feedName];
+            string targetHost = feeds[feedName];
             string targetUri = "http://" + targetHost;
 
             if (action != null)
@@ -101,6 +106,21 @@ namespace Larais.NuGetApp
 
             context.Response.Headers.Remove("transfer-encoding");
             await response.Content.CopyToAsync(context.Response.Body);
+        }
+
+        public async Task PushPackage(Stream fileStream, string targetFeed)
+        {
+            if (!feeds.ContainsKey(targetFeed))
+            {
+                throw new InvalidOperationException("Feed does not exist.");
+            }
+
+            string targetUri = "http://" + feeds[targetFeed] + "/api/v2/package";
+
+            using (HttpClient httpClient = new HttpClient())
+            {
+                await httpClient.PutAsync(targetUri, new StreamContent(fileStream));
+            }
         }
     }
 }

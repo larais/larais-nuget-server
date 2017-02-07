@@ -18,7 +18,7 @@ namespace Larais.NuGetApp
     {
         public static IServiceProvider ServiceProvider { get; private set; }
 
-        private NuGetServerProxy nugetServerProxy;
+        private NuGetServerService nugetServerService;
 
         public Startup(IHostingEnvironment env)
         {
@@ -48,9 +48,11 @@ namespace Larais.NuGetApp
             services.AddSingleton(typeof(SettingsManager));
             //services.AddSingleton<IPackageService, PackageService>();
 
+            services.AddSingleton(typeof(NuGetServerService));
+
             ServiceProvider = services.BuildServiceProvider();
 
-            nugetServerProxy = new NuGetServerProxy();
+            nugetServerService = (NuGetServerService)ServiceProvider.GetService(typeof(NuGetServerService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,7 +76,7 @@ namespace Larais.NuGetApp
                 PathString remainingPath;
                 if (context.Request.Path.StartsWithSegments("/feed", out feedName, out remainingPath) && remainingPath.HasValue && remainingPath.Value.Length != 1)
                 {
-                    await nugetServerProxy.Forward(context, remainingPath);
+                    await nugetServerService.Forward(context, remainingPath);
                 }
                 else
                 {

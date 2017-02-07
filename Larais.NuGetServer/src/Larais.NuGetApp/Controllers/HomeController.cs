@@ -4,19 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Larais.NuGetApp.Model;
+using System.Net.Http;
 
 namespace Larais.NuGetApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly SettingsManager settingsManager;
+        private readonly NuGetServerService nugetServerService;
 
-        //private readonly IPackageService packageService;
-
-        public HomeController(SettingsManager settingsManager)
+        public HomeController(SettingsManager settingsManager, NuGetServerService nugetServerService)
         {
-            //this.packageService = packageService;
             this.settingsManager = settingsManager;
+            this.nugetServerService = nugetServerService;
         }
 
         public IActionResult Index()
@@ -29,6 +29,8 @@ namespace Larais.NuGetApp.Controllers
             ViewData["FileIsValid"] = TempData["FileIsValid"];
 
             ViewData["FirstRun"] = settingsManager.Password == string.Empty;
+
+            ViewData["FeedNames"] = settingsManager.Feeds.Select(f => f.Key);
 
             return View();
         }
@@ -46,16 +48,8 @@ namespace Larais.NuGetApp.Controllers
         [HttpPost]
         public async Task<ActionResult> PackageUpload(UploadViewModel model)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    TempData["FileIsValid"] = await packageService.CreatePackage(model.File);
-            //    TempData["UploadMessage"] = "Package has been uploaded successfully";
-            //}
-            //else
-            //{
-            //    TempData["UploadMessage"] = "An error has occured";
-            //    ModelState.AddModelError(string.Empty, "Invalid data detected.");
-            //}
+            var fileStream = model.File.OpenReadStream();
+            await nugetServerService.PushPackage(fileStream, model.TargetFeed);
 
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
