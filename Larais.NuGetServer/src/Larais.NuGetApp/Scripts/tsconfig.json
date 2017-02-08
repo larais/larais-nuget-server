@@ -11,7 +11,8 @@
     "typings/index.d.ts",
     "./model.ts",
     "./home.ts",
-    "./admin.ts"
+    "./admin.ts",
+    "./nuGetFeedClient.ts"
   ],
   "exclude": [
     "wwwroot"

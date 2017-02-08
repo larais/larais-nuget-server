@@ -35,6 +35,11 @@ namespace Larais.NuGetApp.Controllers
             return View();
         }
 
+        public IActionResult ManageFeeds()
+        {
+            return View();
+        }
+
         public IActionResult About()
         {
             return View();
