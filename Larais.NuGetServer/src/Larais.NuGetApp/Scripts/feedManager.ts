@@ -10,8 +10,8 @@ function getFeeds(): void {
         });
 }
 
-function addFeed(name: string): void {
-    httpCall(appHost + "/api/feed?name=" + name, "POST")
+function addFeed(name: string, location: string): void {
+    httpCall(appHost + "/api/feed?name=" + name + "&location=" + location, "POST")
         .fail(function (error) {
             console.log(error);
         })

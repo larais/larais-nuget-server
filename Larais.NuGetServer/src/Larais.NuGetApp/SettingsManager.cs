@@ -143,6 +143,21 @@ namespace Larais.NuGetApp
             }
         }
 
+        public void RenameFeed(string currentName, string newName)
+        {
+            lock (settingsLock)
+            {
+                if (!settings.Feeds.ContainsKey(currentName))
+                {
+                    throw new InvalidOperationException("A feed with this name already exists.");
+                }
+                
+                settings.Feeds[newName] = settings.Feeds[currentName];
+                settings.Feeds.Remove(currentName);
+                FlushToDisk();
+            }
+        }
+
         public void RemoveFeed(string name)
         {
             lock (settingsLock)
