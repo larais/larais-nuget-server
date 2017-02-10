@@ -1,4 +1,4 @@
-﻿var appHost = "http://localhost:56589/";
+﻿var appHost = "http://localhost:56589";
 
 function getFeeds(): void {
     $.get(appHost + "/api/feed")
@@ -41,7 +41,10 @@ function deleteFeed(name: string): void {
 }
 
 function getFeed(feed: string, searchTerm: string = null): void {
-    $.get(appHost + "/n/" + feed)
+    var url = appHost + "/n/" + feed + "/Search()?$filter=IsAbsoluteLatestVersion&includePrerelease=true";
+    if (searchTerm != null) url += "&searchTerm='" + searchTerm + "'";
+
+    $.get(url)
         .fail(function (error) {
             console.log(error);
         })
