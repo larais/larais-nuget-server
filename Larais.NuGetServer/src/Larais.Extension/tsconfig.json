@@ -1,13 +1,11 @@
 ﻿{
   "compilerOptions": {
-    "module": "commonjs",
-    "sourceMap": false,
-    "target": "ES5",
-    "moduleResolution": "node",
+    "module": "amd",
     "rootDir": "src/",
     "outDir": "dist/",
     "types": [
-      "vss-web-extension-sdk"
+      "vss-web-extension-sdk",
+      "jquery"
     ]
   },
     "exclude": [

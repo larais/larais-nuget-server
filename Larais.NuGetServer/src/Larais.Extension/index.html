@@ -3,10 +3,42 @@
 <head>
     <title>LaRais-Packages</title>
     <script src="dist/lib/VSS.SDK.min.js"></script>
-    <script src="dist/app.js"></script>
     <link rel="stylesheet" href="static/larais.css">
 </head>
 <body>
-    <h1>Still a long way to go..</h1>
+    <script type="text/javascript">
+        VSS.init({
+            explicitNotifyLoaded: true,
+            usePlatformScripts: true,
+            usePlatformStyles: true,
+            setupModuleLoader: true,
+            moduleLoaderConfig: {
+                paths: {
+                    "Dist": "dist"
+                }
+            }
+        });
+        VSS.ready(function () {
+            require(["Dist/app"], function (app) { });
+            VSS.notifyLoadSucceeded();
+        });
+    </script>
+
+    <div id="splitter-container" class="splitter horizontal toggle-button-enabled">
+            <div class="leftPane">
+                <div id="leftPane-content">
+                    <div id="feed-crud-menu"></div>
+                    <div id="feed-treeview"></div>
+                </div>
+            </div>
+            <div class="handleBar">
+                <div class="handlebar-label" title="Feed Explorer">
+                    <span class="handlebar-label-text">Feed Explorer</span>
+                </div>
+            </div>
+            <div class="rightPane">
+                Right pane content
+            </div>
+        </div>
 </body>
 </html>
