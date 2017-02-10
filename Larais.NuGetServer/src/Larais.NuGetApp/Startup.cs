@@ -32,8 +32,7 @@ namespace Larais.NuGetApp
         }
 
         public IConfigurationRoot Configuration { get; set; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthentication();
@@ -41,12 +40,9 @@ namespace Larais.NuGetApp
 
             services.AddMvc();
 
-            //services.AddCaching();
             services.AddSession();
-
-            // Add custom services.
+            
             services.AddSingleton(typeof(SettingsManager));
-            //services.AddSingleton<IPackageService, PackageService>();
 
             services.AddSingleton(typeof(NuGetServerService));
 
@@ -54,8 +50,7 @@ namespace Larais.NuGetApp
 
             nugetServerService = (NuGetServerService)ServiceProvider.GetService(typeof(NuGetServerService));
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
@@ -74,9 +69,13 @@ namespace Larais.NuGetApp
             {
                 PathString feedName;
                 PathString remainingPath;
-                if (context.Request.Path.StartsWithSegments("/feed", out feedName, out remainingPath) && remainingPath.HasValue && remainingPath.Value.Length != 1)
+                if (context.Request.Path.StartsWithSegments("/n", out feedName, out remainingPath))
                 {
-                    await nugetServerService.Forward(context, remainingPath);
+                    await nugetServerService.ForwardCall(context, remainingPath, true);
+                }
+                else if (context.Request.Path.StartsWithSegments("/s", out feedName, out remainingPath))
+                {
+                    await nugetServerService.ForwardCall(context, remainingPath, false);
                 }
                 else
                 {
@@ -101,8 +100,6 @@ namespace Larais.NuGetApp
                 Debug.WriteLine("CALL TRACKER: " + context.Request.Path.Value);
                 await next();
             });
-
-            //app.UseMvcWithDefaultRoute();
 
             app.UseMvc(routes =>
             {

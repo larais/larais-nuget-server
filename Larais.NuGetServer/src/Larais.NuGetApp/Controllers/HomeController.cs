@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Larais.NuGetApp.Model;
-using System.Net.Http;
 
 namespace Larais.NuGetApp.Controllers
 {
@@ -27,10 +24,9 @@ namespace Larais.NuGetApp.Controllers
             }
 
             ViewData["FileIsValid"] = TempData["FileIsValid"];
-
             ViewData["FirstRun"] = settingsManager.Password == string.Empty;
-
             ViewData["FeedNames"] = settingsManager.Feeds.Select(f => f.Key);
+            ViewData["Host"] = Request.Host.Value;
 
             return View();
         }

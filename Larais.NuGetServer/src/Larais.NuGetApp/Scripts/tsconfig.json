@@ -12,7 +12,7 @@
     "./model.ts",
     "./home.ts",
     "./admin.ts",
-    "./nuGetFeedClient.ts"
+    "./feedManager.ts"
   ],
   "exclude": [
     "wwwroot"

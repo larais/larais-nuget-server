@@ -27,11 +27,11 @@ namespace Larais.NuGetApp
             feeds = settings.Feeds;
         }
 
-        public async Task Forward(HttpContext context, PathString feedPath)
+        public async Task ForwardCall(HttpContext context, PathString feedPath, bool isFeedCall)
         {
             string feedName = feedPath.Value.Substring(1);
-            string action = null;
-            
+            string action = string.Empty;
+
             int firstSlash = feedName.IndexOf('/');
             if (firstSlash == feedName.Length - 1)
             {
@@ -50,29 +50,18 @@ namespace Larais.NuGetApp
             }
 
             string targetHost = feeds[feedName];
-            string targetUri = "http://" + targetHost;
+            string url = "http://" + targetHost;
 
-            if (action != null)
-            {
-                if (!action.StartsWith("/api"))
-                {
-                    targetUri += "/nuget" + action;
-                }
-                else
-                {
-                    targetUri += action;
-                }
-            }
-
-            targetUri += context.Request.QueryString;
+            if (isFeedCall) url += "/nuget";
+            url += action + context.Request.QueryString;            
 
             var proxyRequest = new HttpRequestMessage();
 
-            var request = context.Request.Method;
-            if (!HttpMethods.IsGet(request) &&
-                !HttpMethods.IsHead(request) &&
-                !HttpMethods.IsDelete(request) &&
-                !HttpMethods.IsTrace(request))
+            var method = context.Request.Method;
+            if (!HttpMethods.IsGet(method) &&
+                !HttpMethods.IsHead(method) &&
+                !HttpMethods.IsDelete(method) &&
+                !HttpMethods.IsTrace(method))
             {
                 var streamContent = new StreamContent(context.Request.Body);
                 proxyRequest.Content = streamContent;
@@ -88,8 +77,8 @@ namespace Larais.NuGetApp
                 }
             }
 
-            proxyRequest.RequestUri = new Uri(targetUri);
-            proxyRequest.Method = new HttpMethod(request);
+            proxyRequest.RequestUri = new Uri(url);
+            proxyRequest.Method = new HttpMethod(method);
 
             var response = await httpClient.SendAsync(proxyRequest, HttpCompletionOption.ResponseHeadersRead, context.RequestAborted);
 
