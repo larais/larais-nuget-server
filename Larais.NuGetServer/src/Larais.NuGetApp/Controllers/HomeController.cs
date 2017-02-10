@@ -33,7 +33,7 @@ namespace Larais.NuGetApp.Controllers
 
         public IActionResult ManageFeeds()
         {
-            return View();
+            return View(settingsManager.Feeds.Select(f => f.Key));
         }
 
         public IActionResult About()

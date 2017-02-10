@@ -83,7 +83,7 @@
         <div class="col-md-4 col-sm-4">
             <div id="targetFeedGroup" class="input-group">
                 <span class="input-group-addon" id="sizing-addon1">Target feed</span>
-                <input asp-for="TargetFeed" type="text" class="form-control" readonly value="@((ViewData["FeedNames"] as IEnumerable<string>).First())"/>
+                <input asp-for="TargetFeed" type="text" class="form-control" readonly value="@((ViewData["FeedNames"] as IEnumerable<string>).FirstOrDefault())"/>
                 <div class="input-group-btn">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
                     <ul id="feedname-dropdown" class="dropdown-menu">

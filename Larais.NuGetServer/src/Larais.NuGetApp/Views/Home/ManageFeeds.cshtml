@@ -1,11 +1,46 @@
+@model System.Collections.Generic.IEnumerable<string>
 
 @{
     ViewData["Title"] = "ManageFeeds";
 }
 
+<script src="~/js/manage.js"></script>
 <script src="~/js/feedManager.js"></script>
 
 <h2>Manage Feeds</h2>
+<br />
+<h4>Create feed</h4>
+<div class="form-inline">
+    <div class="form-group">
+        <label for="inputAddFeedName">Name</label>
+        <input type="text" class="form-control" id="inputAddFeedName">
+    </div>
+    <div class="form-group" style="margin-left: 10px">
+        <label for="inputAddFeedLocation">Location</label>
+        <input type="text" class="form-control" id="inputAddFeedLocation">
+    </div>
+
+    <button type="submit" class="btn btn-default" onclick="createFeed()">Create</button>
+</div>
+<br />
+<h4>Feeds</h4>
+<table class="table table-striped" style="max-width: 600px">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (string feed in Model)
+        {
+        <tr>
+            <td>@feed</td>
+            <td><button class="btn btn-default" onclick="deleteFeedDialog('@feed')">Delete</button><button class="btn btn-default" onclick="renameFeedDialog('@feed')">Rename</button></td>
+        </tr>
+        }
+    </tbody>
+</table>
 
 <button class="btn btn-default" onclick="addFeed('great_feed', 'http://localhost:51911/')">Add feed</button>
 <button class="btn btn-default" onclick="getFeeds()">Get feeds</button>

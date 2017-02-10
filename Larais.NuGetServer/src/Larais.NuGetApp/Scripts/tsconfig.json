@@ -12,7 +12,8 @@
     "./model.ts",
     "./home.ts",
     "./admin.ts",
-    "./feedManager.ts"
+    "./feedManager.ts",
+    "./manage.ts"
   ],
   "exclude": [
     "wwwroot"
