@@ -1,7 +1,51 @@
-﻿body {
-    font-family: 'Segoe UI', sans-serif;
+﻿#splitter-container {
+    position: absolute;
 }
 
-span {
-    font-style: italic;
-}
+
+    /* From https://cdn.vsassets.io/v/20170208T195652/App_Themes/Default/Splitter.css */
+    #splitter-container.splitter.horizontal > .leftPane {
+        width: 250px;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        margin-right: 0;
+    }
+
+    #splitter-container.splitter.horizontal > .handleBar {
+        left: 250px;
+        right: auto;
+        width: 0;
+        cursor: e-resize;
+        top: 0;
+        bottom: 0;
+        border-left-width: 1px;
+    }
+
+    #splitter-container.splitter.horizontal > .rightPane {
+        width: auto;
+        left: 250px;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin-left: 1px;
+    }
+
+    #splitter-container.splitter.horizontal.right-fix > .leftPane {
+        width: auto;
+        left: 0;
+        right: 250px;
+        margin-right: 1px;
+    }
+
+    #splitter-container.splitter.horizontal.right-fix > .rightPane {
+        width: 250px;
+        left: auto;
+        right: 0;
+        margin-left: 0;
+    }
+
+    #splitter-container.splitter.horizontal.right-fix > .handleBar {
+        left: auto;
+        right: 250px !important;
+    }

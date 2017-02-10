@@ -20,7 +20,7 @@
             //    stderr:true
             //},
             publish_dev: {
-                command: "tfx extension publish --service-url https://marketplace.visualstudio.com --manifests vss-extension.json",
+                command: "tfx extension publish --service-url https://marketplace.visualstudio.com --rev-version --manifests vss-extension.json",
                 stdout: true,
                 stderr: true
             },
