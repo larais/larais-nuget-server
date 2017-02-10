@@ -29,6 +29,9 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="..\Larais.NuGetApp\Scripts\feedManager.ts">
+      <Link>src\feedManager.ts</Link>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\app.ts" />
   </ItemGroup>
   <ItemGroup>

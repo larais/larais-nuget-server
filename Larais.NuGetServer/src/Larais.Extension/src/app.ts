@@ -1,4 +1,7 @@
 ﻿/// <reference types="vss-web-extension-sdk" />
+/// <reference path="../../larais.nugetapp/scripts/feedmanager.ts" />
+
+
 import Controls = require("VSS/Controls");
 import Splitter = require("VSS/Controls/Splitter");
 import Menus = require("VSS/Controls/Menus");
@@ -23,6 +26,7 @@ var menubarOpts: Menus.MenuBarOptions = {
         switch (args.get_commandName()) {
             case "newFeed":
                 alert("");
+                addFeed("test");
                 break;
         }
     }

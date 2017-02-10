@@ -1,14 +1,16 @@
-﻿{
+{
   "compilerOptions": {
     "module": "amd",
-    "rootDir": "src/",
-    "outDir": "dist/",
+    "rootDirs": [ "src", "../../larais.nugetapp/scripts/feedmanager.ts" ],
+    "outDir": "tmp/",
+    "sourceMap": true,
     "types": [
       "vss-web-extension-sdk",
       "jquery"
     ]
   },
-    "exclude": [
-        "node_modules"
-    ]
+  "exclude": [
+    "node_modules"
+  ],
+  "compileOnSave": true
 }
