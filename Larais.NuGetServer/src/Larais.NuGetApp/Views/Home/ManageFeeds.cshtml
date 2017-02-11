@@ -1,14 +1,14 @@
-@model System.Collections.Generic.IEnumerable<string>
-
 @{
     ViewData["Title"] = "ManageFeeds";
 }
-
+<script src="~/lib/jsrender/jsrender.min.js"></script>
 <script src="~/js/manage.js"></script>
 <script src="~/js/feedManager.js"></script>
 
 <h2>Manage Feeds</h2>
-<br />
+<div style="height: 25px">
+    <div class="loader"></div>
+</div>
 <h4>Create feed</h4>
 <div class="form-inline">
     <div class="form-group">
@@ -19,35 +19,25 @@
         <label for="inputAddFeedLocation">Location</label>
         <input type="text" class="form-control" id="inputAddFeedLocation">
     </div>
-
-    <button type="submit" class="btn btn-default" onclick="createFeed()">Create</button>
+    <button class="btn btn-default" onclick="createFeed()">Create</button>
 </div>
 <br />
+
 <h4>Feeds</h4>
-<table class="table table-striped" style="max-width: 600px">
+<table id="feedTable" class="table table-striped" style="max-width: 600px">
     <thead>
         <tr>
             <th>Name</th>
-            <th>Action</th>
+            <th>Location</th>
+            <th class="action-row">Action</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (string feed in Model)
-        {
-        <tr>
-            <td>@feed</td>
-            <td><button class="btn btn-default" onclick="deleteFeedDialog('@feed')">Delete</button><button class="btn btn-default" onclick="renameFeedDialog('@feed')">Rename</button></td>
-        </tr>
-        }
+        
     </tbody>
 </table>
-
-<button class="btn btn-default" onclick="addFeed('great_feed', 'http://localhost:51911/')">Add feed</button>
-<button class="btn btn-default" onclick="getFeeds()">Get feeds</button>
-<button class="btn btn-default" onclick="renameFeed('great_feed', 'great_feed_2')">Rename feed</button>
-<button class="btn btn-default" onclick="deleteFeed('great_feed_2')">Delete Feed</button>
-
-<button class="btn btn-default" onclick="getFeed('testthing', 'ent')">Get feed</button>
+<button class="btn btn-default" onclick="refreshFeedGrid()"><span class="glyphicon glyphicon-refresh"></span></button>
+<br />
 <button class="btn btn-default" onclick="uploadPackage()">Upload Package</button>
 <button class="btn btn-default" onclick="unlistPackage('', '', '')">Unlist Package</button>
 <button class="btn btn-default" onclick="downloadPackage('', '', '')">Download Package</button>
@@ -56,3 +46,50 @@
 <p>Output</p>
 <textarea id="output" rows="10" cols="100">
 </textarea> 
+
+<script id="feedRowTmpl" type="text/x-jsrender">
+    {{for feeds}}
+    <tr>
+        <td>{{:name}}</td>
+        <td>{{:location}}</td>
+        <td><button class="btn btn-default" onclick="deleteFeedDialog('{{:name}}')">Delete</button><button class="btn btn-default" onclick="renameFeedDialog('{{:name}}')">Rename</button></td>
+    </tr>
+    {{/for}}
+</script>
+
+<script id="renameDialogTmpl" type="text/x-jsrender">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Confirm delete</h4>
+        </div>
+        <div class="modal-body">
+            <p>Rename feed "{{:name}}" to</p>
+            <input type="text" id="inputNewFeedName" value="{{:name}}" class="form-control"/>
+        </div>
+        <div class="modal-footer">
+            <button id="btnCancel" type="button" class="btn btn-default">Cancel</button>
+            <button id="btnRename" type="button" class="btn btn-primary">Rename</button>
+        </div>
+    </div>
+</script>
+
+<script id="confirmDialogTmpl" type="text/x-jsrender">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Confirm delete feed</h4>
+        </div>
+        <div class="modal-body">
+            <p>Do you really want to delete the feed "{{:name}}"?</p>
+        </div>
+        <div class="modal-footer">
+            <button id="btnCancel" type="button" class="btn btn-default">Cancel</button>
+            <button id="btnConfirm" type="button" class="btn btn-primary">Confirm</button>
+        </div>
+    </div>
+</script>
+
+<div id="modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document"></div>
+</div>
