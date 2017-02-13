@@ -38,22 +38,6 @@ namespace Larais.NuGetApp
             }
         }
 
-        public string PackagePath
-        {
-            get
-            {
-                return settings.Path;
-            }
-            set
-            {
-                lock (settingsLock)
-                {
-                    settings.Path = value;
-                    FlushToDisk();
-                }
-            }
-        }
-
         public string Email
         {
             get
@@ -86,50 +70,18 @@ namespace Larais.NuGetApp
             }
         }
 
-        public UploadMode UploadMode
-        {
-            get
-            {
-                return settings.UploadMode;
-            }
-            set
-            {
-                lock (settingsLock)
-                {
-                    settings.UploadMode = value;
-                    FlushToDisk();
-                }
-            }
-        }
-
-        public float MaxPackageSizeInMB
-        {
-            get
-            {
-                return settings.MaxPackageSizeInMB;
-            }
-            set
-            {
-                lock (settingsLock)
-                {
-                    settings.MaxPackageSizeInMB = value;
-                    FlushToDisk();
-                }
-            }
-        }
-
-        public IReadOnlyDictionary<string, string> Feeds
+        public IReadOnlyDictionary<string, FeedSettings> Feeds
         {
             get
             {
                 lock (settingsLock)
                 {
-                    return new ReadOnlyDictionary<string, string>(settings.Feeds);
+                    return new ReadOnlyDictionary<string, FeedSettings>(settings.Feeds);
                 }
             }
         }
 
-        public void AddFeed(string name, string location)
+        public void AddFeed(string name, FeedSettings feedInfo)
         {
             lock (settingsLock)
             {
@@ -138,7 +90,7 @@ namespace Larais.NuGetApp
                     throw new InvalidOperationException("A feed with this name already exists.");
                 }
 
-                settings.Feeds.Add(name, location);
+                settings.Feeds.Add(name, feedInfo);
                 FlushToDisk();
             }
         }

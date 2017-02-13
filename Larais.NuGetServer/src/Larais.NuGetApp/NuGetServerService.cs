@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Larais.NuGetApp.Model;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +13,7 @@ namespace Larais.NuGetApp
     {
         private readonly HttpClient httpClient;
 
-        private IReadOnlyDictionary<string, string> feeds;
+        private IReadOnlyDictionary<string, FeedSettings> feeds;
 
         public NuGetServerService()
         {
@@ -49,7 +50,7 @@ namespace Larais.NuGetApp
                 return;
             }
 
-            string targetHost = feeds[feedName];
+            string targetHost = feeds[feedName].Location;
             string url = "http://" + targetHost;
 
             if (isFeedCall) url += "/nuget";

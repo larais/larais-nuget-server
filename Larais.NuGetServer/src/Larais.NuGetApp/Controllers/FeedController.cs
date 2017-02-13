@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Larais.NuGetApp.Model;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Larais.NuGetApp.Controllers
 {
@@ -19,9 +20,9 @@ namespace Larais.NuGetApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(string name, string location)
+        public IActionResult Add(string name, FeedSettings settings)
         {
-            settingsManager.AddFeed(name, location);
+            settingsManager.AddFeed(name, settings);
             return Ok();
         }
 

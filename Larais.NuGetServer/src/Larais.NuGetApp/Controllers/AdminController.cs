@@ -29,9 +29,7 @@ namespace Larais.NuGetApp.Controllers
             }
 
             AdminViewModel model = new AdminViewModel();
-            model.PackagePath = settingsManager.PackagePath;
             model.AdminEmail = settingsManager.Email;
-            model.UploadMode = settingsManager.UploadMode;
 
             return View(model);
         }
@@ -46,7 +44,6 @@ namespace Larais.NuGetApp.Controllers
             }
 
             AdminSetupViewModel model = new AdminSetupViewModel();
-            model.PackagePath = settingsManager.PackagePath;
 
             return View(model);
         }
@@ -58,7 +55,6 @@ namespace Larais.NuGetApp.Controllers
             if (ModelState.IsValid)
             {
                 settingsManager.Password = model.Password;
-                settingsManager.PackagePath = model.PackagePath;
                 settingsManager.Email = model.Email;
 
                 return RedirectToAction(nameof(Login));
@@ -117,37 +113,7 @@ namespace Larais.NuGetApp.Controllers
             await HttpContext.Authentication.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return View();
         }
-
-        // Options API
-
-        [HttpPut]
-        public IActionResult UpdatePackagePath(string path)
-        {
-            if (!string.IsNullOrEmpty(path))
-            {
-                if (!Directory.Exists(path))
-                {
-                    return new BadRequestObjectResult(new { reason = "directory not found" });
-                }
-
-                settingsManager.PackagePath = path;
-
-                return new NoContentResult();
-            }
-            else
-            {
-                return new BadRequestObjectResult(new { reason = "path empty" });
-            }
-        }
-
-        [HttpPut]
-        public IActionResult UpdateUploadMode(UploadMode mode)
-        {
-            settingsManager.UploadMode = mode;
-
-            return new NoContentResult();
-        }
-
+        
         // Account API
 
         [HttpPut]
