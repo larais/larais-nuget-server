@@ -1,4 +1,4 @@
-﻿var appHost = "http://localhost:56589";
+﻿var appHost = "https://localhost:44390";
 
 function getFeeds(): JQueryXHR {
     return $.getJSON(appHost + "/api/feed");
