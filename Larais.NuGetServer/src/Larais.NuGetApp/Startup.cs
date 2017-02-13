@@ -37,11 +37,17 @@ namespace Larais.NuGetApp
         {
             services.AddAuthentication();
 
-
             services.AddMvc();
 
             services.AddSession();
-            
+
+            services.AddCors(o => o.AddPolicy("LaraisAllowAny", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
             services.AddSingleton(typeof(SettingsManager));
 
             services.AddSingleton(typeof(NuGetServerService));

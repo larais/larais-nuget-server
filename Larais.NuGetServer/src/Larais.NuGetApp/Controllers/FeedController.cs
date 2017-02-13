@@ -1,9 +1,11 @@
 ﻿using Larais.NuGetApp.Model;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Larais.NuGetApp.Controllers
 {
     [Route("api/feed")]
+    [EnableCors("LaraisAllowAny")]
     public class FeedController : Controller
     {
         private readonly SettingsManager settingsManager;
