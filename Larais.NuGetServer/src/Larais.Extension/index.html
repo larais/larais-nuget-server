@@ -19,8 +19,9 @@
             }
         });
         VSS.ready(function () {
-            require(["Dist/app"], function (app) { });
-            VSS.notifyLoadSucceeded();
+            require(["Dist/app","Dist/feedmanager"], function (app, feedmanager) {
+                var e = new app.LaraisExtension();
+            });
         });
     </script>
 
@@ -37,7 +38,7 @@
                 </div>
             </div>
             <div class="rightPane">
-                Right pane content
+                <div id="feed-package-grid"></div>
             </div>
         </div>
 </body>
