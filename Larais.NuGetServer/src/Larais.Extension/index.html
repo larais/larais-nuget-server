@@ -19,27 +19,46 @@
             }
         });
         VSS.ready(function () {
-            require(["Dist/app","Dist/feedmanager"], function (app, feedmanager) {
+            require(["Dist/app", "Dist/feedmanager"], function (app, feedmanager) {
                 var e = new app.LaraisExtension();
             });
         });
     </script>
 
     <div id="splitter-container" class="splitter horizontal toggle-button-enabled">
-            <div class="leftPane">
-                <div id="leftPane-content">
-                    <div id="feed-crud-menu"></div>
-                    <div id="feed-treeview"></div>
-                </div>
-            </div>
-            <div class="handleBar">
-                <div class="handlebar-label" title="Feed Explorer">
-                    <span class="handlebar-label-text">Feed Explorer</span>
-                </div>
-            </div>
-            <div class="rightPane">
-                <div id="feed-package-grid"></div>
+        <div class="leftPane">
+            <div id="leftPane-content">
+                <div id="feed-crud-menu"></div>
+                <div id="feed-treeview"></div>
             </div>
         </div>
+        <div class="handleBar">
+            <div class="handlebar-label" title="Feed Explorer">
+                <span class="handlebar-label-text">Feed Explorer</span>
+            </div>
+        </div>
+        <div class="rightPane">
+            <div id="feed-package-grid"></div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="addFeedModal" class="feed-dialog-content">
+        <p>
+            <label for="inputAddFeedName">Name</label>
+            <input type="text" class="form-control" id="inputAddFeedName">
+        </p>
+        <p>
+            <label for="inputAddFeedLocation">Location</label>
+            <input type="text" class="form-control" id="inputAddFeedLocation">
+        </p>
+    </div>
+
+    <div id="renameFeedModal" class="feed-dialog-content">
+        <p>
+            <label for="inputEditFeedName">New Name</label>
+            <input type="text" class="form-control" id="inputRenameFeedName" value="">
+        </p>
+    </div>
 </body>
 </html>

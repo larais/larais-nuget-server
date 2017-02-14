@@ -3,16 +3,29 @@
 }
 
 .leftPane {
-    padding:10px;
+    padding: 10px;
 }
 
 #feed-package-grid {
     position: absolute;
     top: 10px;
-    left:10px;
-    right:0px;
-    bottom:0px;
+    left: 10px;
+    right: 0px;
+    bottom: 0px;
 }
+
+/* Dialog */
+.feed-dialog-content {
+    display: none;
+}
+
+    .feed-dialog-content input {
+        border: 1px solid #ddd;
+        width: 100%;
+        outline: none;
+        padding: 2px;
+    }
+
 /* From https://cdn.vsassets.io/v/20170208T195652/App_Themes/Default/Splitter.css */
 #splitter-container.splitter.horizontal > .leftPane {
     width: 250px;
@@ -22,40 +35,40 @@
     margin-right: 0;
 }
 
-    #splitter-container.splitter.horizontal > .handleBar {
-        left: 250px;
-        right: auto;
-        width: 0;
-        cursor: e-resize;
-        top: 0;
-        bottom: 0;
-        border-left-width: 1px;
-    }
+#splitter-container.splitter.horizontal > .handleBar {
+    left: 250px;
+    right: auto;
+    width: 0;
+    cursor: e-resize;
+    top: 0;
+    bottom: 0;
+    border-left-width: 1px;
+}
 
-    #splitter-container.splitter.horizontal > .rightPane {
-        width: auto;
-        left: 250px;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        margin-left: 1px;
-    }
+#splitter-container.splitter.horizontal > .rightPane {
+    width: auto;
+    left: 250px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin-left: 1px;
+}
 
-    #splitter-container.splitter.horizontal.right-fix > .leftPane {
-        width: auto;
-        left: 0;
-        right: 250px;
-        margin-right: 1px;
-    }
+#splitter-container.splitter.horizontal.right-fix > .leftPane {
+    width: auto;
+    left: 0;
+    right: 250px;
+    margin-right: 1px;
+}
 
-    #splitter-container.splitter.horizontal.right-fix > .rightPane {
-        width: 250px;
-        left: auto;
-        right: 0;
-        margin-left: 0;
-    }
+#splitter-container.splitter.horizontal.right-fix > .rightPane {
+    width: 250px;
+    left: auto;
+    right: 0;
+    margin-left: 0;
+}
 
-    #splitter-container.splitter.horizontal.right-fix > .handleBar {
-        left: auto;
-        right: 250px !important;
-    }
+#splitter-container.splitter.horizontal.right-fix > .handleBar {
+    left: auto;
+    right: 250px !important;
+}
