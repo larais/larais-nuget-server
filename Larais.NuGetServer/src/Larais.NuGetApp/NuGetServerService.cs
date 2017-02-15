@@ -18,14 +18,17 @@ namespace Larais.NuGetApp
         public NuGetServerService()
         {
             httpClient = new HttpClient();
-            RefreshFeeds();
+            UpdateFeeds();
         }
 
-        public void RefreshFeeds()
+        public void UpdateFeeds(IReadOnlyDictionary<string, FeedSettings> feeds = null)
         {
-            var settings = (SettingsManager)Startup.ServiceProvider.GetService(typeof(SettingsManager));
+            if (feeds == null)
+            {
+                feeds = ((SettingsManager)Startup.ServiceProvider.GetService(typeof(SettingsManager))).Feeds;
+            }
 
-            feeds = settings.Feeds;
+            this.feeds = feeds;
         }
 
         public async Task ForwardCall(HttpContext context, PathString feedPath, bool isFeedCall)
@@ -105,7 +108,7 @@ namespace Larais.NuGetApp
                 throw new InvalidOperationException("Feed does not exist.");
             }
 
-            string targetUri = "http://" + feeds[targetFeed] + "/api/v2/package";
+            string targetUri = "http://" + feeds[targetFeed].Location + "/api/v2/package";
 
             using (HttpClient httpClient = new HttpClient())
             {

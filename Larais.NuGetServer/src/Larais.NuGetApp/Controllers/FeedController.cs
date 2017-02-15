@@ -9,10 +9,12 @@ namespace Larais.NuGetApp.Controllers
     public class FeedController : Controller
     {
         private readonly SettingsManager settingsManager;
+        private readonly NuGetServerService nugetServerService;
 
-        public FeedController(SettingsManager settingsManager)
+        public FeedController(SettingsManager settingsManager, NuGetServerService nugetServerService)
         {
             this.settingsManager = settingsManager;
+            this.nugetServerService = nugetServerService;
         }
 
         [HttpGet]
@@ -25,6 +27,7 @@ namespace Larais.NuGetApp.Controllers
         public IActionResult Add(string name, [FromQuery] FeedSettings settings)
         {
             settingsManager.AddFeed(name, settings);
+            nugetServerService.UpdateFeeds(settingsManager.Feeds);
             return Ok();
         }
 
@@ -32,6 +35,7 @@ namespace Larais.NuGetApp.Controllers
         public IActionResult Rename(string currentName, string newName)
         {
             settingsManager.RenameFeed(currentName, newName);
+            nugetServerService.UpdateFeeds(settingsManager.Feeds);
             return Ok();
         }
 
@@ -39,6 +43,7 @@ namespace Larais.NuGetApp.Controllers
         public IActionResult Delete(string name)
         {
             settingsManager.RemoveFeed(name);
+            nugetServerService.UpdateFeeds(settingsManager.Feeds);
             return Ok();
         }
     }
