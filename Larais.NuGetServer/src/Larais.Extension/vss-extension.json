@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "LaRais-Extension",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "name": "Larais.Extension",
   "description": "Simple NuGet-Server that can serve multiple feeds and allows for web based uploading and managing of NuGet packages.",
   "publisher": "larais",
@@ -25,7 +25,7 @@
       "type": "ms.vss-web.hub",
       "description": "",
       "targets": [
-        "ms.vss-work-web.work-hub-group"
+        "ms.vss-build-web.build-hub-group"
       ],
       "properties": {
         "name": "Packages",
