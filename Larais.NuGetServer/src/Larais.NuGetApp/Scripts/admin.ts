@@ -16,12 +16,6 @@ function changeAdminMail(): void {
     put("UpdateAdminEmail", "email=" + newMail);
 }
 
-function changePackagePath(): void {
-    var path = $("#PackagePath").val();
-
-    put("UpdatePackagePath", "path=" + path);
-}
-
 function changePassword(): void {
     var password = $("#password").val();
     var passwordRepeat = $("#passwordRepeat").val();
