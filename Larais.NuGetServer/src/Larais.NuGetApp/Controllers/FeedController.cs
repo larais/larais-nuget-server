@@ -22,7 +22,7 @@ namespace Larais.NuGetApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(string name, FeedSettings settings)
+        public IActionResult Add(string name, [FromQuery] FeedSettings settings)
         {
             settingsManager.AddFeed(name, settings);
             return Ok();

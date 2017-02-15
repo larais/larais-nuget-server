@@ -1,11 +1,11 @@
-﻿var appHost = "https://localhost:44390";
+﻿var appHost = "";
 
 function getFeeds(): JQueryXHR {
     return $.getJSON(appHost + "/api/feed");
 }
 
-function addFeed(name: string, location: string): JQueryXHR {
-    return httpCall(appHost + "/api/feed?name=" + name + "&location=" + location, "POST");
+function addFeed(name: string, location: string, apiKey: string = null): JQueryXHR {
+    return httpCall(appHost + "/api/feed?name=" + name + "&Location=" + location + "&ApiKey=" + apiKey, "POST");
 }
 
 function renameFeed(currentName: string, newName: string): JQueryXHR {

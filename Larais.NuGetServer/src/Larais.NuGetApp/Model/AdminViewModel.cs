@@ -4,8 +4,6 @@ namespace Larais.NuGetApp.Model
 {
     public class AdminViewModel
     {
-        public string PackagePath { get; set; }
-        
         public string AdminEmail { get; set; }
 
         public UploadMode UploadMode { get; set; }
@@ -30,9 +28,5 @@ namespace Larais.NuGetApp.Model
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string PasswordConfirm { get; set; }
-
-        [Required]
-        [Display(Name = "Package path")]
-        public string PackagePath { get; set; }
     }
 }

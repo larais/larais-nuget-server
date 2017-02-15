@@ -57,7 +57,7 @@ function refreshFeedGrid(): void {
             let feeds: any[] = [];
 
             for (let key in result) {
-                feeds.push({ name: key, location: result[key] });
+                feeds.push({ name: key, location: result[key].location });
             }
 
             let rows = $("#feedRowTmpl").render({ feeds: feeds });
