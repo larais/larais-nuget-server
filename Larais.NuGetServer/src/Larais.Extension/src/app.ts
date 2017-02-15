@@ -13,6 +13,7 @@ export class LaraisExtension {
     private feedListRootNode: TreeView.TreeNode = null;
 
     constructor() {
+        appHost = "https://localhost:44390"; //TODO: Data storage
         this.initializeUI();
         VSS.notifyLoadSucceeded();
     }

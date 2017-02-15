@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "LaRais-Extension",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "name": "Larais.Extension",
   "description": "Simple NuGet-Server that can serve multiple feeds and allows for web based uploading and managing of NuGet packages.",
   "publisher": "larais",
@@ -21,22 +21,31 @@
   ],
   "contributions": [
     {
-      "id": "Larais.Extension",
-      "type": "ms.vss-web.hub",
-      "description": "",
+      "id": "larais-extension-hub-group",
+      "type": "ms.vss-web.hub-group",
+      "description": "Overview of all feeds.",
       "targets": [
-        "ms.vss-build-web.build-hub-group"
+        "ms.vss-web.project-hub-groups-collection"
       ],
       "properties": {
-        "name": "Packages",
-        "order": 99,
+        "name": "Larais",
+        "order": 100
+      }
+    },
+    {
+      "id": "larais-extension-view-feed-hub",
+      "type": "ms.vss-web.hub",
+      "description": "Overview of all feeds.",
+      "targets": [
+        ".larais-extension-hub-group"
+      ],
+      "properties": {
+        "name": "Feeds",
+        "order": 100,
         "uri": "index.html"
       }
     }
-  ],
-  "scopes": [
-    "vso.work"
-  ],
+],
   "files": [
     {
       "path": "dist",
