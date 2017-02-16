@@ -35,17 +35,26 @@
         padding-left: 25px;
     }
 
+/* NuGet-Package-Representation */
+PackagesList {
+
+}
+
+PackagesList > li {
+
+}
+
 /* Dialog */
 .feed-dialog-content {
     display: none;
 }
 
-    .feed-dialog-content input {
-        border: 1px solid #ddd;
-        width: 100%;
-        outline: none;
-        padding: 2px;
-    }
+.larais-text-input {
+    border: 1px solid #ddd;
+    width: 100%;
+    outline: none;
+    padding: 2px;
+}
 
 /* From https://cdn.vsassets.io/v/20170208T195652/App_Themes/Default/Splitter.css */
 #splitter-container.splitter.horizontal .leftPane {
@@ -53,7 +62,7 @@
     left: 0;
     top: 0;
     bottom: 0;
-    margin-right: 0;
+    padding-right: 10px;
 }
 
 #splitter-container.splitter.horizontal .handleBar {

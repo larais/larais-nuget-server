@@ -54,17 +54,6 @@ export class LaraisExtension {
             nodes: [this.feedListRootNode],
             clickToggles: false,
             useBowtieStyle: false,
-            //contextMenu: {
-            //    items: [
-            //        { id: "editFeed", text: "Edit Feed", icon: "bowtie-icon bowtie-edit-outline" },
-            //        { separator: true },
-            //        { id: "deleteFeed", text: "Delete Feed", icon: "bowtie-icon bowtie-edit-delete" }
-            //    ],
-            //    executeAction: feedMenuActionClick.bind(this),
-            //    arguments: function (contextInfo) {
-            //        return { item: contextInfo.item };
-            //    }
-            //}
         }
 
         var feedsAsJSON = getFeeds()
@@ -79,6 +68,14 @@ export class LaraisExtension {
             }).always(function () {
                 this.feedList = Controls.create(TreeView.TreeView, $("#feed-treeview"), treeviewOpts);
             }.bind(this));
+
+        //TODO: Implement this dummy event
+        $("#feed-treeview").bind("selectionchanged", function(e) {
+            var selectedNode = this.feedList.getSelectedNode();
+            if (selectedNode) {
+                alert(`${selectedNode.text} selected!`);
+            }
+        }.bind(this));
 
         //Menu
         var menuItems: Menus.IMenuItemSpec[] = [

@@ -42,14 +42,13 @@
                 <h1 title="Feed Title">Feed Title</h1>
             </div>
             
-            
             <div id="splitter-package-container" class="splitter horizontal">
                 <!-- Right side splitter-->
                 <div class="leftPane">
                     <p>
-                        <input type="text" class="form-control" id="searchPackageInFeed">
+                        <input type="text" placeholder="Search" class="form-control larais-text-input" id="searchPackageInFeed">
                     </p>
-                    <ul>
+                    <ul id="PackagesList">
                         <li>Package 1</li>
                         <li>Package 2</li>
                         <li>Package 3</li>
@@ -71,25 +70,25 @@
     <div id="addFeedModal" class="feed-dialog-content">
         <p>
             <label for="inputAddFeedName">Name</label>
-            <input type="text" class="form-control" id="inputAddFeedName">
+            <input type="text" class="form-control larais-text-input" id="inputAddFeedName">
         </p>
         <p>
             <label for="inputAddFeedLocation">Location</label>
-            <input type="text" class="form-control" id="inputAddFeedLocation">
+            <input type="text" class="form-control larais-text-input" id="inputAddFeedLocation">
         </p>
     </div>
 
     <div id="renameFeedModal" class="feed-dialog-content">
         <p>
             <label for="inputEditFeedName">New Name</label>
-            <input type="text" class="form-control" id="inputRenameFeedName" value="">
+            <input type="text" class="form-control larais-text-input" id="inputRenameFeedName" value="">
         </p>
     </div>
 
     <div id="settingsModal" class="feed-dialog-content">
         <p>
             <label for="inputNuGetAppHost">Larais NuGet App address</label>
-            <input type="text" class="form-control" id="inputNuGetAppHost" value="">
+            <input type="text" class="form-control larais-text-input" id="inputNuGetAppHost" value="">
         </p>
     </div>
 </body>
