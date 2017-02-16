@@ -27,7 +27,6 @@ export class LaraisExtension {
     }
 
     private initializeUI() {
-
         //Horizontal Splitter: Feed Explorer | Right Content
         var splitter = <Splitter.Splitter>Controls.Enhancement.enhance(Splitter.Splitter, $("#splitter-container"));
 
