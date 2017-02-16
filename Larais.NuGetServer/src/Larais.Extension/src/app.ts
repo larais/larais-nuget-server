@@ -23,10 +23,6 @@ export class LaraisExtension {
         var splitter = <Splitter.Splitter>Controls.Enhancement.enhance(Splitter.Splitter, $("#splitter-container"));
 
         //Treeview
-        this.feedListRootNode = new TreeView.TreeNode("Feeds");
-        this.feedListRootNode.expanded = true;
-        this.feedListRootNode.noContextMenu = true;
-
         function feedMenuActionClick(args) {
             var selectedNode: TreeView.TreeNode = this.feedList.getSelectedNode();
             switch (args.get_commandName()) {
@@ -45,6 +41,10 @@ export class LaraisExtension {
             }
         }
 
+        this.feedListRootNode = new TreeView.TreeNode("Feeds");
+        this.feedListRootNode.expanded = true;
+        this.feedListRootNode.noContextMenu = true;
+
         var treeviewOpts: TreeView.ITreeOptions = {
             nodes: [this.feedListRootNode],
             clickToggles: false,
@@ -62,17 +62,18 @@ export class LaraisExtension {
             //}
         }
 
-        var feedsAsJSON = getFeeds().done(function (data) {
-            //TODO: Save locally
-            $.each(data, function (key, value) {
-                this.feedListRootNode.add(new TreeView.TreeNode(key));
-            }.bind(this));
-            this.feedList = Controls.create(TreeView.TreeView, $("#feed-treeview"), treeviewOpts);
-        }.bind(this))
+        var feedsAsJSON = getFeeds()
+            .done(function (data) {
+                $.each(data, function (key, value) { //TODO: Save locally
+                    this.feedListRootNode.add(new TreeView.TreeNode(key));
+                }.bind(this));
+            }.bind(this))
             .fail(function (jqXHR, textStatus, errorThrown) {
                 console.log("Error while fetching feeds!");
                 console.log(jqXHR);
-        });
+            }).always(function () {
+                this.feedList = Controls.create(TreeView.TreeView, $("#feed-treeview"), treeviewOpts);
+            }.bind(this));
 
         //Menu
         var menuItems: Menus.IMenuItemSpec[] = [
