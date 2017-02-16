@@ -18,7 +18,6 @@ namespace Larais.NuGetApp
         public NuGetServerService()
         {
             httpClient = new HttpClient();
-            UpdateFeeds();
         }
 
         public void UpdateFeeds(IReadOnlyDictionary<string, FeedSettings> feeds = null)

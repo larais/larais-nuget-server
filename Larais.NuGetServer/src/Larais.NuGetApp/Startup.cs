@@ -50,11 +50,13 @@ namespace Larais.NuGetApp
 
             services.AddSingleton(typeof(SettingsManager));
 
-            services.AddSingleton(typeof(NuGetServerService));
+            nugetServerService = new NuGetServerService();
+
+            services.AddSingleton(typeof(NuGetServerService), nugetServerService);
 
             ServiceProvider = services.BuildServiceProvider();
 
-            nugetServerService = (NuGetServerService)ServiceProvider.GetService(typeof(NuGetServerService));
+            nugetServerService.UpdateFeeds();
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
