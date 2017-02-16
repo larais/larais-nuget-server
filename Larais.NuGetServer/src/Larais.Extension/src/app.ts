@@ -19,8 +19,11 @@ export class LaraisExtension {
     }
 
     private initializeUI() {
-        //Splitter
+        //Horizontal Splitter: Feed Explorer | Right Content
         var splitter = <Splitter.Splitter>Controls.Enhancement.enhance(Splitter.Splitter, $("#splitter-container"));
+
+        //Horizontal Splitter: Packages List | Package Description
+        var splitterPackage = <Splitter.Splitter>Controls.Enhancement.enhance(Splitter.Splitter, $("#splitter-package-container"));
 
         //Treeview
         function feedMenuActionClick(args) {
@@ -91,27 +94,7 @@ export class LaraisExtension {
         }
 
         var menubar = Controls.create<Menus.MenuBar, any>(Menus.MenuBar, $("#feed-crud-menu"), menubarOpts);
-
-        //Grid
-        var gridOptions: Grids.IGridOptions = {
-            height: "100%",
-            width: "100%",
-            source: function () {
-                var result = [], i;
-                for (i = 0; i < 100; i++) {
-                    result[result.length] = [i, "Column 2 text" + i, "Column 3 " + Math.random()];
-                }
-
-                return result;
-            }(),
-            columns: [
-                { text: "Column 1", index: 0, width: 50, canSortBy: false },
-                { text: "Column 2", index: 1, width: 200, canSortBy: false },
-                { text: "Column 3", index: 2, width: 450, canSortBy: false }]
-        };
-
-        Controls.create(Grids.Grid, $("#feed-package-grid"), gridOptions);
-    }
+}
 
     private showAddFeedDialog() {
         var dialog = Dialogs.show(Dialogs.ModalDialog, <Dialogs.IModalDialogOptions>{
