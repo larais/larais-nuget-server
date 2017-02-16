@@ -21,7 +21,6 @@ export class LaraisExtension {
     }
 
     private initializeUI() {
-
         //Horizontal Splitter: Feed Explorer | Right Content
         var splitter = <Splitter.Splitter>Controls.Enhancement.enhance(Splitter.Splitter, $("#splitter-container"));
 
@@ -87,7 +86,7 @@ export class LaraisExtension {
             { separator: true },
             { id: "editFeed", text: "", icon: "bowtie-icon bowtie-edit-outline" },
             { id: "deleteFeed", text: "", icon: "bowtie-icon bowtie-edit-delete" },
-            { id: "settings", text: "Settings", icon: "bowtie-icon bowtie-settings-gear" }
+            { id: "settings", text: "", icon: "bowtie-icon bowtie-settings-gear" }
         ];
 
         var menubarOpts: Menus.MenuBarOptions = {

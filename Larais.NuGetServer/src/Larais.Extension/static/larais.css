@@ -2,7 +2,7 @@
     position: absolute;
 }
 
-#splitter-container > .leftPane {
+    #splitter-container > .leftPane {
         padding: 10px;
     }
 
@@ -28,12 +28,12 @@
     font-family: "-apple-system",BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Helvetica,Ubuntu,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
 }
 
-#larais-hub-title > h1 {
-    font-weight: 200;
-    font-size: 18px;
-    margin-top: 0;
-    padding-left: 25px;
-}
+    #larais-hub-title > h1 {
+        font-weight: 200;
+        font-size: 18px;
+        margin-top: 0;
+        padding-left: 25px;
+    }
 
 /* Dialog */
 .feed-dialog-content {
@@ -48,7 +48,7 @@
     }
 
 /* From https://cdn.vsassets.io/v/20170208T195652/App_Themes/Default/Splitter.css */
-#splitter-container.splitter.horizontal > .leftPane {
+#splitter-container.splitter.horizontal .leftPane {
     width: 250px;
     left: 0;
     top: 0;
@@ -56,7 +56,7 @@
     margin-right: 0;
 }
 
-#splitter-container.splitter.horizontal > .handleBar {
+#splitter-container.splitter.horizontal .handleBar {
     left: 250px;
     right: auto;
     width: 0;
@@ -66,7 +66,7 @@
     border-left-width: 1px;
 }
 
-#splitter-container.splitter.horizontal > .rightPane {
+#splitter-container.splitter.horizontal .rightPane {
     width: auto;
     left: 250px;
     right: 0;
@@ -75,21 +75,21 @@
     margin-left: 1px;
 }
 
-#splitter-container.splitter.horizontal.right-fix > .leftPane {
+#splitter-container.splitter.horizontal.right-fix .leftPane {
     width: auto;
     left: 0;
     right: 250px;
     margin-right: 1px;
 }
 
-#splitter-container.splitter.horizontal.right-fix > .rightPane {
+#splitter-container.splitter.horizontal.right-fix .rightPane {
     width: 250px;
     left: auto;
     right: 0;
     margin-left: 0;
 }
 
-#splitter-container.splitter.horizontal.right-fix > .handleBar {
+#splitter-container.splitter.horizontal.right-fix .handleBar {
     left: auto;
     right: 250px !important;
 }
