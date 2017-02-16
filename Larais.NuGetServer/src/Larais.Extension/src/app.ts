@@ -36,7 +36,7 @@ export class LaraisExtension {
                     if (selectedNode != null) this.showDeleteFeedConfirmationDialog(selectedNode);
                     break;
                 case "settings":
-
+                    this.showSettingsDialog();
                     break;
             }
         }
@@ -173,7 +173,21 @@ export class LaraisExtension {
     }
 
     private showSettingsDialog(): void {
+        $("#inputNuGetAppHost").val(appHost);
 
+        var dialog = Dialogs.show(Dialogs.ModalDialog, {
+            title: "Settings",
+            content: $("#settingsModal").clone(),
+            buttons: {
+                "Save": () => {
+                    appHost = $("#inputNuGetAppHost").val();
+                    dialog.close();
+                },
+                "Cancel": () => {
+                    dialog.close();
+                }
+            }
+        });
     }
 
     //UTILS
