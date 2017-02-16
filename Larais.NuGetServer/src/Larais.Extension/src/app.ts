@@ -39,6 +39,9 @@ export class LaraisExtension {
                 case "deleteFeed":
                     if (selectedNode != null) this.showDeleteFeedConfirmationDialog(selectedNode);
                     break;
+                case "settings":
+
+                    break;
             }
         }
 
@@ -76,7 +79,8 @@ export class LaraisExtension {
             { id: "newFeed", text: "Add Feed", icon: "bowtie-icon bowtie-math-plus" },
             { separator: true },
             { id: "editFeed", text: "", icon: "bowtie-icon bowtie-edit-outline" },
-            { id: "deleteFeed", text: "", icon: "bowtie-icon bowtie-edit-delete" }
+            { id: "deleteFeed", text: "", icon: "bowtie-icon bowtie-edit-delete" },
+            { id: "settings", text: "Settings", icon: "bowtie-icon bowtie-settings-gear" }
         ];
 
         var menubarOpts: Menus.MenuBarOptions = {
@@ -165,6 +169,10 @@ export class LaraisExtension {
                 }
             }
         });
+    }
+
+    private showSettingsDialog(): void {
+
     }
 
     //UTILS
