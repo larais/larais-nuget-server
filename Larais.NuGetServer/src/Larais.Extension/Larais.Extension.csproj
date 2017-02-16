@@ -33,6 +33,7 @@
       <Link>src\feedManager.ts</Link>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\app.ts" />
+    <TypeScriptCompile Include="src\storage.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="package.json" />
