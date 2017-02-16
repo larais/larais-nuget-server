@@ -20,7 +20,7 @@
         });
         VSS.ready(function () {
             require(["Dist/app", "Dist/feedmanager"], function (app, feedmanager) {
-                var e = new app.LaraisExtension();
+                var e = new app.Larais.Extension.LaraisExtension();
             });
         });
     </script>
@@ -83,6 +83,13 @@
         <p>
             <label for="inputEditFeedName">New Name</label>
             <input type="text" class="form-control" id="inputRenameFeedName" value="">
+        </p>
+    </div>
+
+    <div id="settingsModal" class="feed-dialog-content">
+        <p>
+            <label for="inputNuGetAppHost">Larais NuGet App address</label>
+            <input type="text" class="form-control" id="inputNuGetAppHost" value="">
         </p>
     </div>
 </body>
