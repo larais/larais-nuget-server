@@ -1,4 +1,4 @@
-﻿var appHost = "";
+﻿var appHost: string = "";
 
 function getFeeds(): JQueryXHR {
     return $.getJSON(appHost + "/api/feed");

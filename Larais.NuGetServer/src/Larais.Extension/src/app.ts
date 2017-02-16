@@ -14,7 +14,13 @@ export class LaraisExtension {
     private feedListRootNode: TreeView.TreeNode = null;
 
     constructor() {
-        initializeStorage().done(() => {
+        getValue(SettingsKey.LaraisHostAddress).done((value) => {
+            if (value != null && value.length > 0) {
+                appHost = value;
+            } else {
+                this.showSettingsDialog();
+            }
+
             this.initializeUI();
             VSS.notifyLoadSucceeded();
         });
@@ -83,6 +89,7 @@ export class LaraisExtension {
             { separator: true },
             { id: "editFeed", text: "", icon: "bowtie-icon bowtie-edit-outline" },
             { id: "deleteFeed", text: "", icon: "bowtie-icon bowtie-edit-delete" },
+            { separator: true },
             { id: "settings", text: "", icon: "bowtie-icon bowtie-settings-gear" }
         ];
 
@@ -180,17 +187,25 @@ export class LaraisExtension {
         var dialog = Dialogs.show(Dialogs.ModalDialog, <Dialogs.IModalDialogOptions>{
             title: "Settings",
             resizable: false,
-            defaultButton: "Save",
+            hideCloseButton: true,
             content: $("#settingsModal").clone(),
-            buttons: {
-                "Save": () => {
-                    appHost = $("#inputNuGetAppHost").val();
+            okText: "Save",
+            okCallback: (result: string[]) => {
+                appHost = result[0];
+                saveValue(SettingsKey.LaraisHostAddress, appHost).done(() => {
                     dialog.close();
-                },
-                "Cancel": () => {
-                    dialog.close();
-                }
+                });
+            },
+            cancelText: "Cancel",
+            cancelCallback: () => {
+                dialog.close();
             }
+        });
+
+        var dialogElement = dialog.getElement();
+        dialogElement.on("input", (e: JQueryEventObject) => {
+            dialog.setDialogResult(this.getValue(dialogElement));
+            dialog.updateOkButton(!this.isEmpty(dialogElement));
         });
     }
 
