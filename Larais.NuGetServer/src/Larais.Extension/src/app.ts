@@ -65,7 +65,11 @@ export class LaraisExtension {
                 this.feedListRootNode.add(new TreeView.TreeNode(key));
             }.bind(this));
             this.feedList = Controls.create(TreeView.TreeView, $("#feed-treeview"), treeviewOpts);
-        }.bind(this));
+        }.bind(this))
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.log("Error while fetching feeds!");
+                console.log(jqXHR);
+        });
 
         //Menu
         var menuItems: Menus.IMenuItemSpec[] = [
