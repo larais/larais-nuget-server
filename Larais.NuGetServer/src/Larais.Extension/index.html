@@ -19,8 +19,8 @@
             }
         });
         VSS.ready(function () {
-            require(["Dist/app", "Dist/feedmanager"], function (app, feedmanager) {
-                var e = new app.Larais.Extension.LaraisExtension();
+            require(["Dist/app", "Dist/feedmanager", "Dist/storage"], function (app, feedmanager, storage) {
+                var e = new app.LaraisExtension();
             });
         });
     </script>
