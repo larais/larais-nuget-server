@@ -96,6 +96,8 @@ namespace Larais.NuGetApp
                 context.Response.Headers[header.Key] = header.Value.ToArray();
             }
 
+            context.Response.Headers["Access-Control-Allow-Origin"] = "*";
+
             context.Response.Headers.Remove("transfer-encoding");
             await response.Content.CopyToAsync(context.Response.Body);
         }
