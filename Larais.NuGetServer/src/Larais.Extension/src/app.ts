@@ -63,25 +63,19 @@ export class LaraisExtension {
         }
 
         var feedsAsJSON = getFeeds()
+            .fail(this.errorHandler)
             .done(function (data) {
                 $.each(data, function (key, value) { //TODO: Save locally
                     this.feedListRootNode.add(new TreeView.TreeNode(key));
                 }.bind(this));
             }.bind(this))
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                console.log("Error while fetching feeds!");
-                console.log(jqXHR);
-            }).always(function () {
+            
+            .always(function () {
                 this.feedList = Controls.create(TreeView.TreeView, $("#feed-treeview"), treeviewOpts);
             }.bind(this));
 
         //TODO: Implement this dummy event
-        $("#feed-treeview").bind("selectionchanged", function(e) {
-            var selectedNode = this.feedList.getSelectedNode();
-            if (selectedNode) {
-                alert(`${selectedNode.text} selected!`);
-            }
-        }.bind(this));
+        $("#feed-treeview").bind("selectionchanged", (e) => this.onFeedSelected(e));
 
         //Menu
         var menuItems: Menus.IMenuItemSpec[] = [
@@ -120,6 +114,28 @@ export class LaraisExtension {
         };
 
         Controls.create(Grids.Grid, $("#feed-package-grid"), gridOptions);
+    }
+
+    private onFeedSelected(e: JQueryEventObject) {
+        var selectedNode = this.feedList.getSelectedNode();
+        if (selectedNode) {
+            console.log("EVENT Fired: onFeedSelected");
+            this.LoadPackageListForFeed(selectedNode.text);
+        }
+    }
+
+    private LoadFeedList() {
+        //TODO: Implement
+    }
+
+    private LoadPackageListForFeed(feedName: string) {
+        //TODO: Implement
+        var packagesForFeed = getFeed(feedName)
+            .fail(this.errorHandler)
+            .done(function (data) {
+                console.log(data);
+            });
+            
     }
 
     private showAddFeedDialog() {
@@ -222,5 +238,12 @@ export class LaraisExtension {
             result.push($(el).val());
         });
         return result;
+    }
+
+    private errorHandler(jqXHR: JQueryXHR, textStatus: string, errorThrown: string) {
+        console.log("Ajax Error occurred!");
+        console.log(jqXHR);
+        console.log(textStatus);
+        console.log(errorThrown);
     }
 }
