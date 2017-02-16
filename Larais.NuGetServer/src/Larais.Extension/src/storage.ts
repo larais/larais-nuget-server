@@ -6,21 +6,22 @@ enum SettingsKey {
     LaraisHostAddress
 }
 
-function initializeStorage(): JQueryDeferred<any> {
+function saveValue(key: SettingsKey, value: string): JQueryPromise<any> {
     var deferred = $.Deferred();
 
     VSS.getService(VSS.ServiceIds.ExtensionData).then((dataService: any) => {
-        extensionDataService = dataService;
-        deferred.resolve();
+        dataService.setValue(SettingsKey[key], value).then(() => { deferred.resolve(); });
     });
 
     return deferred;
 }
 
-function saveValue(key: SettingsKey, value: string): IPromise<{}> {
-    return extensionDataService.setValue(SettingsKey[key], value);
-}
+function getValue(key: SettingsKey): JQueryPromise<string> {
+    var deferred = $.Deferred();
 
-function getValue(key: SettingsKey): IPromise<{}> {
-    return extensionDataService.getValue(SettingsKey[key]);
+    VSS.getService(VSS.ServiceIds.ExtensionData).then((dataService: any) => {
+        dataService.getValue(SettingsKey[key]).then((value) => { deferred.resolve(value) });
+    });
+
+    return deferred;
 }
