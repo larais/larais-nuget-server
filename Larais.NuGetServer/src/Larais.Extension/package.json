@@ -16,6 +16,7 @@
     "grunt-contrib-copy": "1.0.0",
     "typescript": "^2.1.5",
     "tfx-cli": "0.3.45",
-    "vss-web-extension-sdk": "2.109.1"
+    "vss-web-extension-sdk": "2.109.1",
+    "jsrender": "0.9.83"
   }
 }

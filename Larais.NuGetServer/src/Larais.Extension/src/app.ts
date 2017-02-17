@@ -69,7 +69,7 @@ export class LaraisExtension {
                     this.feedListRootNode.add(new TreeView.TreeNode(key));
                 }.bind(this));
             }.bind(this))
-            
+
             .always(function () {
                 this.feedList = Controls.create(TreeView.TreeView, $("#feed-treeview"), treeviewOpts);
             }.bind(this));
@@ -95,47 +95,54 @@ export class LaraisExtension {
 
         var menubar = Controls.create<Menus.MenuBar, any>(Menus.MenuBar, $("#feed-crud-menu"), menubarOpts);
 
-        //Grid
-        var gridOptions: Grids.IGridOptions = {
-            height: "100%",
-            width: "100%",
-            source: function () {
-                var result = [], i;
-                for (i = 0; i < 100; i++) {
-                    result[result.length] = [i, "Column 2 text" + i, "Column 3 " + Math.random()];
-                }
+        $("#searchPackageInFeed").on('input', this.onSearchingPackageList.bind(this));
 
-                return result;
-            }(),
-            columns: [
-                { text: "Column 1", index: 0, width: 50, canSortBy: false },
-                { text: "Column 2", index: 1, width: 200, canSortBy: false },
-                { text: "Column 3", index: 2, width: 450, canSortBy: false }]
-        };
-
-        Controls.create(Grids.Grid, $("#feed-package-grid"), gridOptions);
-    }
-
-    private onFeedSelected(e: JQueryEventObject) {
-        var selectedNode = this.feedList.getSelectedNode();
-        if (selectedNode) {
-            console.log("EVENT Fired: onFeedSelected");
-            this.LoadPackageListForFeed(selectedNode.text);
-        }
+        $("#PackagesList").on("click", "li", this.onClickPackageShowDetails.bind(this));
     }
 
     private LoadFeedList() {
         //TODO: Implement
     }
 
-    private LoadPackageListForFeed(feedName: string) {
+    private onFeedSelected(e: JQueryEventObject) {
+        console.log("EVENT Fired: onFeedSelected");
+        var selectedNode = this.feedList.getSelectedNode();
+        if (selectedNode) {
+            this.LoadPackageListForFeed(selectedNode.text);
+        }
+    }
+
+    private LoadPackageListForFeed(feedName: string, searchTerm?: string) {
         //TODO: Implement
-        var packagesForFeed = getFeed(feedName)
+        $("#PackagesList").html("");
+        $("#PackagesDetailView").html("");
+
+        var packagesForFeed = getFeed(feedName, searchTerm)
             .fail(this.errorHandler)
-            .done(function (data) {
-                console.log(data);
+            .done(function (xml: XMLDocument) {
+                $(xml).find("entry").each(function (i, e) {
+                    //console.log($(e).find("d\\:Description").text());
+                    //console.log($(e).find("d\\:Version").text()); 
+                    //console.log($(e).find("d\\:IconUrl").text());
+                    //TODO: xrender
+                    var htmlElement = '<li>' + $(e).find("title").text() + '</li>';
+                    $("#PackagesList").append(htmlElement);
+                });
             });
-            
+    }
+
+    private onSearchingPackageList() {
+        console.log("EVENT Fired: onSearchingPackageList");
+        var searchTerm = $("#searchPackageInFeed").val();
+        var selectedNode = this.feedList.getSelectedNode();
+        if (selectedNode) {
+            this.LoadPackageListForFeed(selectedNode.text, searchTerm);
+        }
+    }
+
+    private onClickPackageShowDetails(e: JQueryEventObject) {
+        console.log("EVENT Fired: onClickPackageShowDetails");
+        $("#PackagesDetailView").html("Placeholder for package: " + $(e.currentTarget).text());
     }
 
     private showAddFeedDialog() {
