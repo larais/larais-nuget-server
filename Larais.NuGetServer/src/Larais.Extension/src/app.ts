@@ -214,6 +214,11 @@ export class LaraisExtension {
             content: $("#settingsModal").clone(),
             okText: "Save",
             okCallback: (result: string[]) => {
+                // remove last backslash
+                if (result[0].length != 0 && result[0][result[0].length - 1] === "/") {
+                    result[0] = result[0].substr(0, result[0].length - 1);
+                }
+                
                 appHost = result[0];
                 saveValue(SettingsKey.LaraisHostAddress, appHost).done(() => {
                     dialog.close();
@@ -227,8 +232,21 @@ export class LaraisExtension {
 
         var dialogElement = dialog.getElement();
         dialogElement.on("input", (e: JQueryEventObject) => {
-            dialog.setDialogResult(this.getValue(dialogElement));
-            dialog.updateOkButton(!this.isEmpty(dialogElement));
+            let values = this.getValue(dialogElement);
+
+            dialog.setDialogResult(values);
+            
+            let enabled: boolean = false;
+            let address: string = values[0];
+
+            if (address != null && address.length > 7 && address.indexOf(' ') == -1) {
+                let addrStart = address.substring(0, 7);
+                if (addrStart === "http://" || addrStart === "https:/" && address[7] === "/" && address.length > 8) {
+                    enabled = true;
+                }
+            }
+
+            dialog.updateOkButton(enabled);
         });
     }
 
