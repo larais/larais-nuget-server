@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "LaRais-Extension",
-  "version": "0.0.21",
+  "version": "0.0.1",
   "name": "Larais.Extension",
   "description": "Simple NuGet-Server that can serve multiple feeds and allows for web based uploading and managing of NuGet packages.",
   "publisher": "larais",
@@ -69,20 +69,20 @@
   ],
   "links": {
     "home": {
-      "uri": "https://github.com/SebastianLng/larais-nuget-server"
+      "uri": "https://github.com/larais/larais-nuget-server"
     },
     "getstarted": {
-      "uri": "https://github.com/SebastianLng/larais-nuget-server/blob/develop/README.md"
+      "uri": "https://github.com/larais/larais-nuget-server/blob/develop/README.md"
     },
     "issues": {
-      "uri": "https://github.com/SebastianLng/larais-nuget-server/issues"
+      "uri": "https://github.com/larais/larais-nuget-server/issues"
     },
     "license": {
-      "uri": "https://github.com/SebastianLng/larais-nuget-server/blob/develop/LICENSE"
+      "uri": "https://github.com/larais/larais-nuget-server/blob/develop/LICENSE"
     }
   },
   "repository": {
     "type": "git",
-    "uri": "https://github.com/SebastianLng/larais-nuget-server"
+    "uri": "https://github.com/larais/larais-nuget-server"
   }
 }
