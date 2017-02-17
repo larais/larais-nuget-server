@@ -1,7 +1,5 @@
 ﻿/// <reference types="vss-web-extension-sdk" />
 
-var extensionDataService: any;
-
 enum SettingsKey {
     LaraisHostAddress
 }
@@ -20,7 +18,14 @@ function getValue(key: SettingsKey): JQueryPromise<string> {
     var deferred = $.Deferred();
 
     VSS.getService(VSS.ServiceIds.ExtensionData).then((dataService: any) => {
-        dataService.getValue(SettingsKey[key]).then((value) => { deferred.resolve(value) });
+        dataService.getValue(SettingsKey[key]).then((value) =>
+        {
+            if (value != null) {
+                deferred.resolve(value)
+            } else {
+                deferred.resolve();
+            }
+        });
     });
 
     return deferred;
