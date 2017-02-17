@@ -28,7 +28,7 @@
     <div id="splitter-container" class="splitter horizontal toggle-button-enabled">
         <div class="leftPane">
             <div id="leftPane-content">
-                <div id="feed-crud-menu"></div>
+                <div id="feed-main-menu"></div>
                 <div id="feed-treeview"></div>
             </div>
         </div>
@@ -40,6 +40,7 @@
         <div class="rightPane">
             <div id="larais-hub-title">
                 <h1 title="Feed Title">Feed Title</h1>
+                <div id="feed-right-menu"></div>
             </div>
 
             <div id="splitter-package-container" class="splitter horizontal">
@@ -87,6 +88,22 @@
             <input type="text" class="form-control larais-text-input" id="inputNuGetAppHost">
         </p>
         <p>Example: http://my-server:50000</p>
+    </div>
+
+    <div id="uploadPackageModal" class="feed-dialog-content">
+        <p>
+            <label for="inputPackageUpload"></label>
+            <input type="file" class="form-control larais-text-input" id="inputPackageUpload">
+        </p>
+    </div>
+
+
+    <div id="feedLinkPopup" class="larais-popup" style="display: none">
+        <h1 class="larais-h1"><span class="menu-item-icon bowtie-icon bowtie-link"></span> Link</h1>
+        <span id="feedLinkPopupClose" class="ui-button-icon-primary ui-icon ui-icon-closethick bowtie-icon bowtie-navigate-close larais-close"></span>
+        <p>
+            <input type="text" class="form-control larais-text-input" id="inputFeedLink" readonly>
+        </p>
     </div>
 </body>
 </html>

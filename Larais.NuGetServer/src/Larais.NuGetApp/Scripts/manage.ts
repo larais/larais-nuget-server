@@ -66,6 +66,17 @@ function refreshFeedGrid(): void {
         });
 }
 
+function uploadPackageToFeed(): void {
+    var file = $("#inputPackageUpload").prop("files")[0];
+    uploadPackage("vm-feed1", file)
+        .done(() => {
+            console.log("uploaded");
+        })
+        .fail((error) => {
+            console.log("error");
+        });
+}
+
 function showModal(): void {
     $("#modal").modal("show");
 }

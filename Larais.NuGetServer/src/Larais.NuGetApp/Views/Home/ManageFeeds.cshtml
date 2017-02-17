@@ -38,7 +38,9 @@
 </table>
 <button class="btn btn-default" onclick="refreshFeedGrid()"><span class="glyphicon glyphicon-refresh"></span></button>
 <br />
-<button class="btn btn-default" onclick="uploadPackage()">Upload Package</button>
+<label for="inputPackageUpload">Package</label>
+<input type="file" class="form-control larais-text-input" id="inputPackageUpload">
+<button class="btn btn-default" onclick="uploadPackageToFeed()">Upload Package</button>
 <button class="btn btn-default" onclick="unlistPackage('', '', '')">Unlist Package</button>
 <button class="btn btn-default" onclick="downloadPackage('', '', '')">Download Package</button>
 

@@ -97,7 +97,7 @@ namespace Larais.NuGetApp
             }
 
             context.Response.Headers["Access-Control-Allow-Origin"] = "*";
-
+            context.Response.Headers["Access-Control-Allow-Methods"] = "POST, GET, PUT, DELETE, OPTIONS";
             context.Response.Headers.Remove("transfer-encoding");
             await response.Content.CopyToAsync(context.Response.Body);
         }

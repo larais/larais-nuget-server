@@ -23,8 +23,19 @@ function getFeed(feed: string, searchTerm: string = null): JQueryXHR {
     return $.get(url);
 }
 
-function uploadPackage(): void {
+function uploadPackage(feedName: string, packageData: any): JQueryXHR {
+    var formData = new FormData(); // Creating object of FormData class
+    formData.append("file", packageData);
 
+    return $.ajax({
+        url: appHost + "/s/" + feedName + "/api/v2/package/",
+        method: "PUT",
+        cache: false,
+        processData: false,
+        crossDomain: true,
+        contentType: "multipart/form-data",
+        data: formData
+    });
 }
 
 function unlistPackage(packageId: string, version: string, feedName: string): JQueryXHR {

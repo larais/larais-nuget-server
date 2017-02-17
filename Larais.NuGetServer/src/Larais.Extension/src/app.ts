@@ -33,25 +33,6 @@ export class LaraisExtension {
         //Horizontal Splitter: Packages List | Package Description
         var splitterPackage = <Splitter.Splitter>Controls.Enhancement.enhance(Splitter.Splitter, $("#splitter-package-container"));
 
-        //Treeview
-        function feedMenuActionClick(args) {
-            var selectedNode: TreeView.TreeNode = this.feedList.getSelectedNode();
-            switch (args.get_commandName()) {
-                case "newFeed":
-                    this.showAddFeedDialog();
-                    break;
-                case "editFeed":
-                    if (selectedNode != null) this.showEditFeedDialog(selectedNode);
-                    break;
-                case "deleteFeed":
-                    if (selectedNode != null) this.showDeleteFeedConfirmationDialog(selectedNode);
-                    break;
-                case "settings":
-                    this.showSettingsDialog();
-                    break;
-            }
-        }
-
         this.feedListRootNode = new TreeView.TreeNode("Feeds");
         this.feedListRootNode.expanded = true;
         this.feedListRootNode.noContextMenu = true;
@@ -77,7 +58,7 @@ export class LaraisExtension {
         //TODO: Implement this dummy event
         $("#feed-treeview").bind("selectionchanged", (e) => this.onFeedSelected(e));
 
-        //Menu
+        //Main Menu
         var menuItems: Menus.IMenuItemSpec[] = [
             { id: "newFeed", text: "Add Feed", icon: "bowtie-icon bowtie-math-plus" },
             { separator: true },
@@ -90,14 +71,62 @@ export class LaraisExtension {
         var menubarOpts: Menus.MenuBarOptions = {
             orientation: "horizontal",
             items: menuItems,
-            executeAction: feedMenuActionClick.bind(this)
+            executeAction: this.onMainMenuItemClick.bind(this)
         }
 
-        var menubar = Controls.create<Menus.MenuBar, any>(Menus.MenuBar, $("#feed-crud-menu"), menubarOpts);
+        var main_menubar = Controls.create<Menus.MenuBar, any>(Menus.MenuBar, $("#feed-main-menu"), menubarOpts);
 
         $("#searchPackageInFeed").on('input', this.onSearchingPackageList.bind(this));
 
         $("#PackagesList").on("click", "li", this.onClickPackageShowDetails.bind(this));
+
+        // Feed Menu
+        var feedMenu: Menus.IMenuItemSpec[] = [
+            { id: "uploadFile", text: "Upload", icon: "bowtie-icon bowtie-transfer-upload" },
+            { id: "feedPermission", text: "Permissions", icon: "bowtie-icon bowtie-security-lock-fill" },
+            { id: "feedUrl", text: "Feed Link", icon: "bowtie-icon bowtie-link" }
+        ];
+
+        var feedMenuOptions: Menus.MenuBarOptions = {
+            orientation: "horizontal",
+            items: feedMenu,
+            executeAction: this.onFeedMenuItemClick.bind(this)
+        }
+
+        var feed_menubar = Controls.create<Menus.MenuBar, any>(Menus.MenuBar, $("#feed-right-menu"), feedMenuOptions);
+
+        $("#feedLinkPopupClose").click(this.toggleFeedLinkDialog.bind(this));
+    }
+
+    private onMainMenuItemClick(args) {
+        var selectedNode: TreeView.TreeNode = this.feedList.getSelectedNode();
+        switch (args.get_commandName()) {
+            case "newFeed":
+                this.showAddFeedDialog();
+                break;
+            case "editFeed":
+                if (selectedNode != null) this.showEditFeedDialog(selectedNode);
+                break;
+            case "deleteFeed":
+                if (selectedNode != null) this.showDeleteFeedConfirmationDialog(selectedNode);
+                break;
+            case "settings":
+                this.showSettingsDialog();
+                break;
+        }
+    }
+
+    private onFeedMenuItemClick(args) {
+        switch (args.get_commandName()) {
+            case "uploadFile":
+                this.showUploadPackageDialog();
+                break;
+            case "feedPermission":
+                break;
+            case "feedUrl":
+                this.toggleFeedLinkDialog();
+                break;
+        }
     }
 
     private LoadFeedList() {
@@ -250,6 +279,50 @@ export class LaraisExtension {
         });
     }
 
+    private toggleFeedLinkDialog(): void {
+        var selectedNode = this.feedList.getSelectedNode();
+        if (selectedNode != null) {
+            $("#inputFeedLink").val(appHost + "/n/" + selectedNode.text);
+        }
+        $("#feedLinkPopup").toggle();
+    }
+
+    private showUploadPackageDialog(): void {
+
+        $("#uploadPackageModal label").text("Upload package to " + this.feedList.getSelectedNode().text);
+
+        var dialog = Dialogs.show(Dialogs.ModalDialog, <Dialogs.IModalDialogOptions>{
+            width: 300,
+            title: "Upload Package",
+            resizable: false,
+            content: $("#uploadPackageModal").clone(),
+            okCallback: (result: string[]) => {
+                var file = $(dialogElement).find("#inputPackageUpload").prop("files")[0];
+                console.log("File: " + file);
+                let feedName = this.getSelectedFeedName();
+                console.log("Fname: " + feedName);
+                dialog.showBusyOverlay();
+                uploadPackage(feedName, file)
+                    .done(() => {
+                        console.log("uploaded");
+                        dialog.hideBusyOverlay();
+                        dialog.close();
+                    })
+                    .fail(this.errorHandler);
+            },
+            cancelText: "Cancel",
+            cancelCallback: () => {
+                dialog.close();
+            }
+        });
+
+        var dialogElement = dialog.getElement();
+        dialogElement.on("input", (e: JQueryEventObject) => {
+            dialog.setDialogResult(this.getValue(dialogElement));
+            dialog.updateOkButton(!this.isEmpty(dialogElement));
+        });
+    }
+
     //UTILS
     private isEmpty(parent: JQuery): boolean {
         return parent.find("input").filter((index: number, el: Element) => {
@@ -270,5 +343,9 @@ export class LaraisExtension {
         console.log(jqXHR);
         console.log(textStatus);
         console.log(errorThrown);
+    }
+
+    private getSelectedFeedName(): string {
+        return this.feedList.getSelectedNode().text
     }
 }
