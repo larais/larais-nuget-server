@@ -138,6 +138,7 @@ export class LaraisExtension {
         var selectedNode = this.feedList.getSelectedNode();
         if (selectedNode) {
             this.LoadPackageListForFeed(selectedNode.text);
+            $("#larais-hub-title > h1").text(selectedNode.text);
         }
     }
 
