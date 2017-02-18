@@ -65,6 +65,11 @@
       "path": "node_modules/vss-web-extension-sdk/lib",
       "addressable": true,
       "packagePath": "dist/lib"
+    },
+    {
+      "path": "node_modules/jsrender",
+      "addressable": true,
+      "packagePath": "dist/lib"
     }
   ],
   "links": {

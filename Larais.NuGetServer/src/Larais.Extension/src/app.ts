@@ -1,6 +1,7 @@
 ﻿/// <reference types="vss-web-extension-sdk" />
 /// <reference path="../../larais.nugetapp/scripts/feedmanager.ts" />
 /// <reference path="storage.ts" />
+/// <reference path="../typings/jsrender.d.ts" />
 
 import Controls = require("VSS/Controls");
 import Splitter = require("VSS/Controls/Splitter");
@@ -33,29 +34,8 @@ export class LaraisExtension {
         //Horizontal Splitter: Packages List | Package Description
         var splitterPackage = <Splitter.Splitter>Controls.Enhancement.enhance(Splitter.Splitter, $("#splitter-package-container"));
 
-        this.feedListRootNode = new TreeView.TreeNode("Feeds");
-        this.feedListRootNode.expanded = true;
-        this.feedListRootNode.noContextMenu = true;
+        this.LoadFeedList();
 
-        var treeviewOpts: TreeView.ITreeOptions = {
-            nodes: [this.feedListRootNode],
-            clickToggles: false,
-            useBowtieStyle: false,
-        }
-
-        var feedsAsJSON = getFeeds()
-            .fail(this.errorHandler)
-            .done(function (data) {
-                $.each(data, function (key, value) { //TODO: Save locally
-                    this.feedListRootNode.add(new TreeView.TreeNode(key));
-                }.bind(this));
-            }.bind(this))
-
-            .always(function () {
-                this.feedList = Controls.create(TreeView.TreeView, $("#feed-treeview"), treeviewOpts);
-            }.bind(this));
-
-        //TODO: Implement this dummy event
         $("#feed-treeview").bind("selectionchanged", (e) => this.onFeedSelected(e));
 
         //Main Menu
@@ -78,7 +58,7 @@ export class LaraisExtension {
 
         $("#searchPackageInFeed").on('input', this.onSearchingPackageList.bind(this));
 
-        $("#PackagesList").on("click", "li", this.onClickPackageShowDetails.bind(this));
+        $("#PackagesList").on("click", ".package-single-item", this.onClickPackageShowDetails.bind(this));
 
         // Feed Menu
         var feedMenu: Menus.IMenuItemSpec[] = [
@@ -130,7 +110,26 @@ export class LaraisExtension {
     }
 
     private LoadFeedList() {
-        //TODO: Implement
+        this.feedListRootNode = new TreeView.TreeNode("Feeds");
+        this.feedListRootNode.expanded = true;
+        this.feedListRootNode.noContextMenu = true;
+
+        var treeviewOpts: TreeView.ITreeOptions = {
+            nodes: [this.feedListRootNode],
+            clickToggles: false,
+            useBowtieStyle: false,
+        }
+
+        var feedsAsJSON = getFeeds()
+            .fail(this.errorHandler)
+            .done(function (data) {
+                $.each(data, function (key, value) { //TODO: Save locally
+                    this.feedListRootNode.add(new TreeView.TreeNode(key));
+                }.bind(this));
+            }.bind(this))
+            .always(function () {
+                this.feedList = Controls.create(TreeView.TreeView, $("#feed-treeview"), treeviewOpts);
+            }.bind(this));
     }
 
     private onFeedSelected(e: JQueryEventObject) {
@@ -143,7 +142,9 @@ export class LaraisExtension {
     }
 
     private LoadPackageListForFeed(feedName: string, searchTerm?: string) {
-        //TODO: Implement
+        var tmpl = $.templates("#packageListTemplate");
+        var data = [];
+          
         $("#PackagesList").html("");
         $("#PackagesDetailView").html("");
 
@@ -151,13 +152,15 @@ export class LaraisExtension {
             .fail(this.errorHandler)
             .done(function (xml: XMLDocument) {
                 $(xml).find("entry").each(function (i, e) {
-                    //console.log($(e).find("d\\:Description").text());
-                    //console.log($(e).find("d\\:Version").text()); 
-                    //console.log($(e).find("d\\:IconUrl").text());
-                    //TODO: xrender
-                    var htmlElement = '<li>' + $(e).find("title").text() + '</li>';
-                    $("#PackagesList").append(htmlElement);
+                    let possibleIcon:string = $(e).find("d\\:IconUrl").text();
+                    data.push({
+                        icon: (possibleIcon == "") ? "static/img/packageDefaultIcon-50x50.png" : possibleIcon,
+                        title: $(e).find("title").text(),
+                        version: $(e).find("d\\:Version").text()
+                    });
                 });
+
+                $("#PackagesList").html(tmpl.render({ packages: data }));
             });
     }
 
@@ -172,7 +175,7 @@ export class LaraisExtension {
 
     private onClickPackageShowDetails(e: JQueryEventObject) {
         console.log("EVENT Fired: onClickPackageShowDetails");
-        $("#PackagesDetailView").html("Placeholder for package: " + $(e.currentTarget).text());
+        $("#PackagesDetailView").html("Placeholder for package: " + $(e.currentTarget).find(".package-title").first().text());
     }
 
     private showAddFeedDialog() {
@@ -253,6 +256,7 @@ export class LaraisExtension {
                 saveValue(SettingsKey.LaraisHostAddress, appHost).done(() => {
                     dialog.close();
                 });
+                this.LoadFeedList();
             },
             cancelText: "Cancel",
             cancelCallback: () => {

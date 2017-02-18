@@ -4,6 +4,7 @@
     "rootDirs": [ "src", "../../larais.nugetapp/scripts/feedmanager.ts" ],
     "outDir": "tmp/",
     "sourceMap": true,
+    "typeRoots": [ "./typings" ],
     "types": [
       "vss-web-extension-sdk",
       "jquery"

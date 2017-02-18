@@ -55,11 +55,28 @@
 }
 
 /* NuGet-Package-Representation */
-PackagesList {
-
+#PackagesList {
+    padding-top: 30px;
 }
 
-PackagesList > li {
+.package-single-item {
+    clear: both;
+    margin-bottom:30px;
+}
+
+.package-nuget-icon {
+    height: 50px;
+    width: 50px;
+    display: block;
+    float: left;
+    margin-right: 10px;
+}
+
+.package-title {
+    font-weight: bold;
+}
+
+.package-version {
 
 }
 

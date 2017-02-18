@@ -19,7 +19,7 @@
             }
         });
         VSS.ready(function () {
-            require(["Dist/app", "Dist/feedmanager", "Dist/storage"], function (app, feedmanager, storage) {
+            require(["Dist/app", "Dist/feedmanager", "Dist/storage", "Dist/lib/jsrender"], function (app, feedmanager, storage, jsrender) {
                 var e = new app.LaraisExtension();
             });
         });
@@ -49,19 +49,32 @@
                     <p>
                         <input type="text" placeholder="Search" class="form-control larais-text-input" id="searchPackageInFeed">
                     </p>
-                    <ul id="PackagesList"></ul>
+                    <div id="PackagesList">
+                        <!-- Packages get rendered here -->
+                    </div>
                 </div>
                 <div class="handleBar"></div>
                 <div class="rightPane">
                     <div id="PackagesDetailView">
-                        
+
                     </div>
                 </div>
             </div>
-
-            <!--<div id="feed-package-grid"></div>-->
         </div>
     </div>
+
+    <!-- jsrender Templates -->
+    <script id="packageListTemplate" type="text/x-jsrender">
+        {{for packages}}
+        <div class="package-single-item">
+            <img src="{{:icon}}" class="package-nuget-icon" />
+            <div>
+                <div class="package-title">{{:title}}</div>
+                <div class="package-version">{{:version}}</div>
+            </div>
+        </div>
+        {{/for}}
+    </script>
 
     <!-- Modals -->
     <div id="addFeedModal" class="feed-dialog-content">
