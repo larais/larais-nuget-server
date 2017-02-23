@@ -310,6 +310,7 @@ export class LaraisExtension {
                 uploadPackage(feedName, file)
                     .done(() => {
                         console.log("uploaded");
+                        this.LoadPackageListForFeed(feedName);
                         dialog.hideBusyOverlay();
                         dialog.close();
                     })

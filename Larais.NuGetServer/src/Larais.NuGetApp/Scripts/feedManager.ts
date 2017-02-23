@@ -33,7 +33,7 @@ function uploadPackage(feedName: string, packageData: any): JQueryXHR {
         cache: false,
         processData: false,
         crossDomain: true,
-        contentType: "multipart/form-data",
+        contentType: false,
         data: formData
     });
 }

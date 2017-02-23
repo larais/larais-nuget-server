@@ -56,7 +56,6 @@
 
 /* NuGet-Package-Representation */
 #PackagesList {
-    padding-top: 30px;
 }
 
 .package-single-item {
@@ -137,6 +136,55 @@
     left: auto;
     right: 250px !important;
 }
+
+/* Right Side Splitter */
+
+
+#splitter-package-container.splitter.horizontal .leftPane {
+    width: 290px;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    padding-right: 10px;
+}
+
+#splitter-package-container.splitter.horizontal .handleBar {
+    left: 290px;
+    right: auto;
+    width: 1px;
+    cursor: e-resize;
+    top: 0;
+    bottom: 0;
+}
+
+#splitter-package-container.splitter.horizontal .rightPane {
+    width: auto;
+    left: 290px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin-left: 1px;
+}
+
+#splitter-container.splitter.horizontal.right-fix .leftPane {
+    width: auto;
+    left: 0;
+    right: 290px;
+    margin-right: 1px;
+}
+
+#splitter-package-container.splitter.horizontal.right-fix .rightPane {
+    width: 290px;
+    left: auto;
+    right: 0;
+    margin-left: 0;
+}
+
+#splitter-package-container.splitter.horizontal.right-fix .handleBar {
+    left: auto;
+    right: 290px !important;
+}
+
 
 /* Popup content container */
 .larais-popup {
