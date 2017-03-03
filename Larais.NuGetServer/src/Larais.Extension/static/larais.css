@@ -54,6 +54,10 @@
     float: right;
 }
 
+#feed-treeview ul.tree-children ul.tree-children li {
+    padding-left: 20px;
+}
+
 /* NuGet-Package-Representation */
 #PackagesList {
 }
@@ -202,5 +206,4 @@
 
 .larais-popup > h1 {
     font-size: 18px;
-    font-weight: li;
 }
