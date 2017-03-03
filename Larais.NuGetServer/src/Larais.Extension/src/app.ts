@@ -15,26 +15,36 @@ export class LaraisExtension {
     private feedListRootNode: TreeView.TreeNode = null;
 
     constructor() {
-        getValue(SettingsKey.LaraisHostAddress).done((value) => {
-            if (value != null && value.length > 0) {
-                appHost = value;
-            } else {
-                this.showSettingsDialog();
-            }
+        getValue(SettingsKey.LaraisHostAddress)
+            .done((value) => {
+                if (value != null && value.length > 0) {
+                    appHost = value;
+                } else {
+                    this.showSettingsDialog();
+                }
 
-            this.initializeUI();
-            VSS.notifyLoadSucceeded();
-        });
+                this.initializeUI()
+
+                    .done(function () {
+                        VSS.notifyLoadSucceeded();
+                    })
+                    .fail(function () {
+                        VSS.notifyLoadFailed("UI Initialization failed!");
+                    });
+            })
+            .fail(function (e) {
+                VSS.notifyLoadFailed("UI Initialization failed, could not load settings!");
+            });
     }
 
-    private initializeUI() {
+    private initializeUI(): JQueryPromise<any> {
         //Horizontal Splitter: Feed Explorer | Right Content
         var splitter = <Splitter.Splitter>Controls.Enhancement.enhance(Splitter.Splitter, $("#splitter-container"));
 
         //Horizontal Splitter: Packages List | Package Description
         var splitterPackage = <Splitter.Splitter>Controls.Enhancement.enhance(Splitter.Splitter, $("#splitter-package-container"));
 
-        this.LoadFeedList();
+        var loadFeedListPromise: JQueryPromise<any> = this.LoadFeedList();
 
         $("#feed-treeview").bind("selectionchanged", (e) => this.onFeedSelected(e));
 
@@ -76,6 +86,8 @@ export class LaraisExtension {
         var feed_menubar = Controls.create<Menus.MenuBar, any>(Menus.MenuBar, $("#feed-right-menu"), feedMenuOptions);
 
         $("#feedLinkPopupClose").click(this.toggleFeedLinkDialog.bind(this));
+
+        return loadFeedListPromise;
     }
 
     private onMainMenuItemClick(args) {
@@ -109,18 +121,18 @@ export class LaraisExtension {
         }
     }
 
-    private LoadFeedList() {
+    private LoadFeedList(): JQueryPromise<any> {
         this.feedListRootNode = new TreeView.TreeNode("Feeds");
         this.feedListRootNode.expanded = true;
         this.feedListRootNode.noContextMenu = true;
-
+        
         var treeviewOpts: TreeView.ITreeOptions = {
             nodes: [this.feedListRootNode],
             clickToggles: false,
             useBowtieStyle: false,
         }
 
-        var feedsAsJSON = getFeeds()
+        return getFeeds()
             .fail(this.errorHandler)
             .done(function (data) {
                 $.each(data, function (key, value) { //TODO: Save locally
@@ -141,18 +153,18 @@ export class LaraisExtension {
         }
     }
 
-    private LoadPackageListForFeed(feedName: string, searchTerm?: string) {
+    private LoadPackageListForFeed(feedName: string, searchTerm?: string): JQueryPromise<any> {
         var tmpl = $.templates("#packageListTemplate");
         var data = [];
           
         $("#PackagesList").html("");
         $("#PackagesDetailView").html("");
 
-        var packagesForFeed = getFeed(feedName, searchTerm)
+        return getFeed(feedName, searchTerm)
             .fail(this.errorHandler)
             .done(function (xml: XMLDocument) {
                 $(xml).find("entry").each(function (i, e) {
-                    let possibleIcon:string = $(e).find("d\\:IconUrl").text();
+                    let possibleIcon: string = $(e).find("d\\:IconUrl").text();
                     data.push({
                         icon: (possibleIcon == "") ? "static/img/packageDefaultIcon-50x50.png" : possibleIcon,
                         title: $(e).find("title").text(),
@@ -208,6 +220,7 @@ export class LaraisExtension {
                 renameFeed(selectedNode.text, result[0]).done(function (d) {
                     selectedNode.text = result[0];
                     this.feedList.updateNode(selectedNode);
+                    $("#larais-hub-title > h1").text(result[0]);
                 }.bind(this));
             }
         });
@@ -310,9 +323,11 @@ export class LaraisExtension {
                 uploadPackage(feedName, file)
                     .done(() => {
                         console.log("uploaded");
-                        this.LoadPackageListForFeed(feedName);
-                        dialog.hideBusyOverlay();
-                        dialog.close();
+                        this.LoadPackageListForFeed(feedName)
+                            .always(function () {
+                                dialog.hideBusyOverlay();
+                                dialog.close();
+                            });
                     })
                     .fail(this.errorHandler);
             },
