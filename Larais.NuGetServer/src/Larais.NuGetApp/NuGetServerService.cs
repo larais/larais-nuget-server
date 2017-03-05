@@ -1,5 +1,6 @@
 ﻿using Larais.NuGetApp.Model;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -95,10 +96,13 @@ namespace Larais.NuGetApp
             {
                 context.Response.Headers[header.Key] = header.Value.ToArray();
             }
-
+            
             context.Response.Headers["Access-Control-Allow-Origin"] = "*";
             context.Response.Headers["Access-Control-Allow-Methods"] = "POST, GET, PUT, DELETE, OPTIONS";
             context.Response.Headers.Remove("transfer-encoding");
+
+            context.Response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = response.ReasonPhrase;
+
             await response.Content.CopyToAsync(context.Response.Body);
         }
 
