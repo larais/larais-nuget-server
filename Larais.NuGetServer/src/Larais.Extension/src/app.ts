@@ -188,7 +188,7 @@ export class LaraisExtension {
             .fail(this.errorHandler)
             .done(function (xml: XMLDocument) {
                 let latestEntry = $(xml).find("entry").first();
-                let summary = latestEntry.find("summary").text();
+                let title = latestEntry.find("title").text();
                 let updated = latestEntry.find("updated").text();
                 let authors = latestEntry.find("author").children("name").text();
                 let dependencies: string[] = latestEntry.find("d\\:Dependencies").text().split("|");
@@ -198,7 +198,7 @@ export class LaraisExtension {
                 });
 
                 $("#PackagesDetailView").html($("#packageDetailTemplate").render({
-                    summary: summary,
+                    title: title,
                     updated: updated,
                     authors: authors,
                     versions: versions,

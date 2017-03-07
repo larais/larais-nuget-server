@@ -24,7 +24,7 @@ function getFeed(feed: string, searchTerm: string = null): JQueryXHR {
 }
 
 function getPackageDetail(feedName: string, id: string): JQueryXHR {
-    return $.get(appHost + "/s/" + feedName + "/api/v2/FindPackagesById()?id='" + id + "'");
+    return $.get(appHost + "/n/" + feedName + "/FindPackagesById()?id='" + id + "'");
 }
 
 function uploadPackage(feedName: string, packageData: any): JQueryXHR {
