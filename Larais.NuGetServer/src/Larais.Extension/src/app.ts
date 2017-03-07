@@ -13,6 +13,7 @@ import Grids = require("VSS/Controls/Grids");
 export class LaraisExtension {
     private feedList: TreeView.TreeView = null;
     private feedListRootNode: TreeView.TreeNode = null;
+    private selectedFeed: string = null;
 
     constructor() {
         getValue(SettingsKey.LaraisHostAddress)
@@ -24,7 +25,6 @@ export class LaraisExtension {
                 }
 
                 this.initializeUI()
-
                     .done(function () {
                         VSS.notifyLoadSucceeded();
                     })
@@ -146,11 +146,9 @@ export class LaraisExtension {
 
     private onFeedSelected(e: JQueryEventObject) {
         console.log("EVENT Fired: onFeedSelected");
-        var selectedNode = this.feedList.getSelectedNode();
-        if (selectedNode) {
-            this.LoadPackageListForFeed(selectedNode.text);
-            $("#larais-hub-title > h1").text(selectedNode.text);
-        }
+        this.selectedFeed = this.feedList.getSelectedNode().text;
+        this.LoadPackageListForFeed(this.selectedFeed);
+        $("#larais-hub-title > h1").text(this.selectedFeed);
     }
 
     private LoadPackageListForFeed(feedName: string, searchTerm?: string): JQueryPromise<any> {
@@ -179,15 +177,34 @@ export class LaraisExtension {
     private onSearchingPackageList() {
         console.log("EVENT Fired: onSearchingPackageList");
         var searchTerm = $("#searchPackageInFeed").val();
-        var selectedNode = this.feedList.getSelectedNode();
-        if (selectedNode) {
-            this.LoadPackageListForFeed(selectedNode.text, searchTerm);
-        }
+        
+        this.LoadPackageListForFeed(this.selectedFeed, searchTerm);
     }
 
     private onClickPackageShowDetails(e: JQueryEventObject) {
         console.log("EVENT Fired: onClickPackageShowDetails");
-        $("#PackagesDetailView").html("Placeholder for package: " + $(e.currentTarget).find(".package-title").first().text());
+        var packageTitle = $(e.currentTarget).find(".package-title").first().text();        
+        getPackageDetail(this.selectedFeed, packageTitle)
+            .fail(this.errorHandler)
+            .done(function (xml: XMLDocument) {
+                let latestEntry = $(xml).find("entry").first();
+                let summary = latestEntry.find("summary").text();
+                let updated = latestEntry.find("updated").text();
+                let authors = latestEntry.find("author").children("name").text();
+                let dependencies: string[] = latestEntry.find("d\\:Dependencies").text().split("|");
+                let versions: string[] = [];
+                $(xml).find("d\\:NormalizedVersion").each((index, element) => {
+                    versions.push(element.textContent);
+                });
+
+                $("#PackagesDetailView").html($("#packageDetailTemplate").render({
+                    summary: summary,
+                    updated: updated,
+                    authors: authors,
+                    versions: versions,
+                    dependencies: dependencies
+                }));
+            });
     }
 
     private showAddFeedDialog() {
@@ -317,7 +334,7 @@ export class LaraisExtension {
             okCallback: (result: string[]) => {
                 var file = $(dialogElement).find("#inputPackageUpload").prop("files")[0];
                 console.log("File: " + file);
-                let feedName = this.getSelectedFeedName();
+                let feedName = this.selectedFeed;
                 console.log("Fname: " + feedName);
                 dialog.showBusyOverlay();
                 uploadPackage(feedName, file)
@@ -364,9 +381,5 @@ export class LaraisExtension {
         console.log(jqXHR);
         console.log(textStatus);
         console.log(errorThrown);
-    }
-
-    private getSelectedFeedName(): string {
-        return this.feedList.getSelectedNode().text
-    }
+    }    
 }

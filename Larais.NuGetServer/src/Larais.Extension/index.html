@@ -76,6 +76,26 @@
         {{/for}}
     </script>
 
+    <script id="packageDetailTemplate" type="text/x-jsrender">
+        <p>{{:summary}}</p>
+        <p>Last updated: {{:updated}}</p>
+        <h4>Installation</h4>
+        <h4>Authors</h4>
+        <p>{{:authors}}</p>
+        <h4>Versions</h4>
+        <ul>
+            {{for versions}}
+            <li>{{>#data}}</li>
+            {{/for}}
+        </ul>
+        <h4>Dependencies</h4>
+        <ul>
+        {{for dependencies}}
+            <li>{{>#data}}</li>
+        {{/for}}
+        </ul>
+    </script>
+
     <!-- Modals -->
     <div id="addFeedModal" class="feed-dialog-content">
         <p>

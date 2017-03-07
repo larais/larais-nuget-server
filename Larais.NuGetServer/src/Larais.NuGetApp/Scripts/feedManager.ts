@@ -23,6 +23,10 @@ function getFeed(feed: string, searchTerm: string = null): JQueryXHR {
     return $.get(url);
 }
 
+function getPackageDetail(feedName: string, id: string): JQueryXHR {
+    return $.get(appHost + "/s/" + feedName + "/api/v2/FindPackagesById()?id='" + id + "'");
+}
+
 function uploadPackage(feedName: string, packageData: any): JQueryXHR {
     var formData = new FormData(); // Creating object of FormData class
     formData.append("file", packageData);
